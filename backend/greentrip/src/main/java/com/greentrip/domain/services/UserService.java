@@ -80,6 +80,8 @@ public class UserService {
                     company.totalPoints(),
                     company.totalKm(),
                     company.createdAt(),
+                    company.latitude(),
+                    company.longitude(),
                     company.logoPath()
             );
             companyRepository.update(updatedCompany);
@@ -211,11 +213,13 @@ public class UserService {
                         company.id(),
                         company.name(),
                         company.sirenNumber(),
-                        Math.max(0, (company.totalEmployees() == null ? 1 : company.totalEmployees()) - 1),
+                        Integer.valueOf(Math.max(0, (company.totalEmployees() == null ? 1 : company.totalEmployees()) - 1)),
                         company.totalCo2Saved(),
                         company.totalPoints(),
                         company.totalKm(),
                         company.createdAt(),
+                        company.latitude(),
+                        company.longitude(),
                         company.logoPath()
                 );
                 companyRepository.update(updated);
@@ -251,6 +255,8 @@ public class UserService {
                         oldCompany.totalPoints(),
                         oldCompany.totalKm(),
                         oldCompany.createdAt(),
+                        oldCompany.latitude(),
+                        oldCompany.longitude(),
                         oldCompany.logoPath()
                 );
                 companyRepository.update(updatedOld);
@@ -268,6 +274,8 @@ public class UserService {
                     company.totalPoints(),
                     company.totalKm(),
                     company.createdAt(),
+                    company.latitude(),
+                    company.longitude(),
                     company.logoPath()
             );
             companyRepository.update(updatedNew);

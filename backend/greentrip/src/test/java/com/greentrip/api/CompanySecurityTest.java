@@ -17,7 +17,7 @@ public class CompanySecurityTest {
 
     @Test
     public void testCreateCompanyRequiresAuthentication() {
-        CreateCompanyRequest request = new CreateCompanyRequest("Any", "123456789", null);
+        CreateCompanyRequest request = new CreateCompanyRequest("Any", "123456789", null, null, null);
 
         given()
           .contentType(ContentType.JSON)
@@ -31,7 +31,7 @@ public class CompanySecurityTest {
     @Test
     @TestSecurity(user = "employee@takima.fr", roles = {"USER"})
     public void testCreateCompanyForbiddenForStandardUser() {
-        CreateCompanyRequest request = new CreateCompanyRequest("Any", "123456789", null);
+        CreateCompanyRequest request = new CreateCompanyRequest("Any", "123456789", null, null, null);
 
         given()
           .contentType(ContentType.JSON)
@@ -44,7 +44,7 @@ public class CompanySecurityTest {
 
     @Test
     public void testUpdateCompanyRequiresAuthentication() {
-        UpdateCompanyRequest request = new UpdateCompanyRequest("Any", null);
+        UpdateCompanyRequest request = new UpdateCompanyRequest("Any", null, null, null);
 
         given()
           .contentType(ContentType.JSON)
