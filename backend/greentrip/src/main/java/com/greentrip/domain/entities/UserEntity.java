@@ -12,7 +12,6 @@ public record UserEntity(
     Integer carbonPointsBalance,
     Double totalCo2Saved,
     Double totalKm,
-    String stravaRefreshToken,
     Double workLat,
     Double workLng,
     LocalTime workStartTime,

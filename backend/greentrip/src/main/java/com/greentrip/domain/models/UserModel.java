@@ -53,6 +53,15 @@ public class UserModel extends BaseModel {
     @Column(name = "work_end_time")
     public LocalTime workEndTime;
 
+    @Column(name = "strava_athlete_id")
+    public Long stravaAthleteId;
+
+    @Column(name = "strava_access_token")
+    public String stravaAccessToken;
+
+    @Column(name = "strava_token_expires_at")
+    public Long stravaTokenExpiresAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     public CompanyModel company;

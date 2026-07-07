@@ -65,9 +65,12 @@ public class UserService {
                 null,
                 null,
                 null,
-                null,
                 company != null ? company.id() : null,
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                null,
+                null,
+                null,
+                null
         );
 
         if (company != null) {
@@ -148,7 +151,6 @@ public class UserService {
                 existing.carbonPointsBalance(),
                 existing.totalCo2Saved(),
                 existing.totalKm(),
-                existing.stravaRefreshToken(),
                 existing.workLat(),
                 existing.workLng(),
                 existing.workStartTime(),
@@ -295,13 +297,16 @@ public class UserService {
                 user.carbonPointsBalance(),
                 user.totalCo2Saved(),
                 user.totalKm(),
-                user.stravaRefreshToken(),
                 request.workLat(),
                 request.workLng(),
                 request.workStartTime(),
                 request.workEndTime(),
                 company.id(),
-                user.createdAt()
+                user.createdAt(),
+                user.stravaAthleteId(),
+                user.stravaAccessToken(),
+                user.stravaRefreshToken(),
+                user.stravaTokenExpiresAt()
         );
         
         return userRepository.update(updatedUser);

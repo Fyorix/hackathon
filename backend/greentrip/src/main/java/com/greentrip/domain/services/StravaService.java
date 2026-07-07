@@ -53,8 +53,6 @@ public class StravaService {
                 user.carbonPointsBalance(),
                 user.totalCo2Saved(),
                 user.totalKm(),
-                user.homeLat(),
-                user.homeLng(),
                 user.workLat(),
                 user.workLng(),
                 user.workStartTime(),
