@@ -29,6 +29,12 @@ public class CompanyModel extends BaseModel {
     @Column(name = "logo_path")
     public String logoPath = "default.png";
 
+    @Column(name = "latitude")
+    public Double latitude;
+
+    @Column(name = "longitude")
+    public Double longitude;
+
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<UserModel> users = new ArrayList<>();
 }
