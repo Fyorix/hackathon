@@ -7,11 +7,12 @@ erDiagram
     COMPANIES {
         int id PK
         string name
+        string siren_number
         int total_employees
         float total_co2_saved
         float total_km
         float total_points
-        string unlocked_badge
+        string logo_path
     }
     USERS {
         int id PK
