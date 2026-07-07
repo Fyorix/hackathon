@@ -26,6 +26,13 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             model.carbonPointsBalance,
             model.totalCo2Saved,
             model.totalKm,
+            model.stravaRefreshToken,
+            model.homeLat,
+            model.homeLng,
+            model.workLat,
+            model.workLng,
+            model.workStartTime,
+            model.workEndTime,
             model.company != null ? model.company.id : null,
             model.createdAt
         );
@@ -45,6 +52,13 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             model.carbonPointsBalance = entity.carbonPointsBalance();
             model.totalCo2Saved = entity.totalCo2Saved();
             model.totalKm = entity.totalKm();
+            model.stravaRefreshToken = entity.stravaRefreshToken();
+            model.homeLat = entity.homeLat();
+            model.homeLng = entity.homeLng();
+            model.workLat = entity.workLat();
+            model.workLng = entity.workLng();
+            model.workStartTime = entity.workStartTime();
+            model.workEndTime = entity.workEndTime();
             model.createdAt = entity.createdAt();
             if (entity.companyId() != null) {
                 model.company = entityManager.find(CompanyModel.class, entity.companyId());
