@@ -56,7 +56,11 @@ public class UserService {
                 0.0,
                 0.0,
                 company.id(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                null,
+                null,
+                null,
+                null
         );
 
         // Update company employee count on the CompanyEntity directly
@@ -134,7 +138,11 @@ public class UserService {
                 existing.totalCo2Saved(),
                 existing.totalKm(),
                 existing.companyId(),
-                existing.createdAt()
+                existing.createdAt(),
+                existing.stravaAthleteId(),
+                existing.stravaAccessToken(),
+                existing.stravaRefreshToken(),
+                existing.stravaTokenExpiresAt()
         );
 
         userRepository.update(updated);

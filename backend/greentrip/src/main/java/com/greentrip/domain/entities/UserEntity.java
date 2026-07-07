@@ -12,5 +12,9 @@ public record UserEntity(
     Double totalCo2Saved,
     Double totalKm,
     Long companyId,
-    LocalDateTime createdAt
+    LocalDateTime createdAt,
+    Long stravaAthleteId,
+    String stravaAccessToken,
+    String stravaRefreshToken,
+    Long stravaTokenExpiresAt
 ) {}

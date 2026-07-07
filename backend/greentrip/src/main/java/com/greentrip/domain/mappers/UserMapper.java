@@ -27,7 +27,11 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             model.totalCo2Saved,
             model.totalKm,
             model.company != null ? model.company.id : null,
-            model.createdAt
+            model.createdAt,
+            model.stravaAthleteId,
+            model.stravaAccessToken,
+            model.stravaRefreshToken,
+            model.stravaTokenExpiresAt
         );
     }
 
@@ -38,17 +42,21 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
         if (model == null) {
             model = new UserModel();
             model.id = entity.id();
-            model.name = entity.name();
-            model.email = entity.email();
-            model.password = entity.password();
-            model.role = entity.role();
-            model.carbonPointsBalance = entity.carbonPointsBalance();
-            model.totalCo2Saved = entity.totalCo2Saved();
-            model.totalKm = entity.totalKm();
             model.createdAt = entity.createdAt();
-            if (entity.companyId() != null) {
-                model.company = entityManager.find(CompanyModel.class, entity.companyId());
-            }
+        }
+        model.name = entity.name();
+        model.email = entity.email();
+        model.password = entity.password();
+        model.role = entity.role();
+        model.carbonPointsBalance = entity.carbonPointsBalance();
+        model.totalCo2Saved = entity.totalCo2Saved();
+        model.totalKm = entity.totalKm();
+        model.stravaAthleteId = entity.stravaAthleteId();
+        model.stravaAccessToken = entity.stravaAccessToken();
+        model.stravaRefreshToken = entity.stravaRefreshToken();
+        model.stravaTokenExpiresAt = entity.stravaTokenExpiresAt();
+        if (entity.companyId() != null) {
+            model.company = entityManager.find(CompanyModel.class, entity.companyId());
         }
         return model;
     }
