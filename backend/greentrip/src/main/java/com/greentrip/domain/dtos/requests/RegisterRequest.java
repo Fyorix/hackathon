@@ -20,7 +20,6 @@ public record RegisterRequest(
     @Schema(description = "User's secure password", examples = {"supersecret"})
     String password,
 
-    @NotNull(message = "Company ID is required")
-    @Schema(description = "ID of the company the user belongs to", examples = {"3"})
+    @Schema(description = "ID of the company the user belongs to (optional during registration)", examples = {"3"})
     Long companyId
 ) {}

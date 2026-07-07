@@ -65,6 +65,9 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
         if (entity.companyId() != null) {
             model.company = entityManager.find(CompanyModel.class, entity.companyId());
         }
+        else {
+            model.company = null;
+        }
         return model;
     }
 
