@@ -76,6 +76,50 @@ public class UserResourceIT {
     }
 
     @Test
+    public void testRegisterWithoutCompanyIntegrationFlow() {
+        RegisterRequest request = new RegisterRequest(
+            "No Company User", 
+            "nocompany@takima.fr", 
+            "password123", 
+            null
+        );
+
+        given()
+          .contentType(ContentType.JSON)
+          .body(request)
+        .when()
+          .post("/api/users/register")
+        .then()
+          .statusCode(201)
+          .body("name", is("No Company User"))
+          .body("email", is("nocompany@takima.fr"));
+    }
+
+    @Test
+    @TestSecurity(user = "alex@takima.fr", roles = {"USER"})
+    public void testJoinCompanyIntegrationFlow() {
+        java.time.LocalTime startTime = java.time.LocalTime.of(9, 0);
+        java.time.LocalTime endTime = java.time.LocalTime.of(18, 0);
+        com.greentrip.domain.dtos.requests.JoinCompanyRequest request = new com.greentrip.domain.dtos.requests.JoinCompanyRequest(
+            1L,
+            48.8566,
+            2.3522,
+            48.8966,
+            2.3922,
+            startTime,
+            endTime
+        );
+
+        given()
+          .contentType(ContentType.JSON)
+          .body(request)
+        .when()
+          .post("/api/users/join-company")
+        .then()
+          .statusCode(200);
+    }
+
+    @Test
     @TestSecurity(user = "alex@takima.fr", roles = {"USER"})
     public void testDeleteMeIntegrationFlow() {
         given()
