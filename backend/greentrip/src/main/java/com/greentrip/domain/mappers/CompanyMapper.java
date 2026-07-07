@@ -36,7 +36,9 @@ public class CompanyMapper implements GenericMapper<CompanyModel, CompanyEntity>
         model.totalCo2Saved = entity.totalCo2Saved();
         model.totalPoints = entity.totalPoints();
         model.totalKm = entity.totalKm();
-        model.createdAt = entity.createdAt();
+        if (entity.createdAt() != null) {
+            model.createdAt = entity.createdAt();
+        }
         model.logoPath = entity.logoPath();
         return model;
     }
