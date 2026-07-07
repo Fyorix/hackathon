@@ -62,10 +62,13 @@ public class UserService {
         CompanyEntity updatedCompany = new CompanyEntity(
                 company.id(),
                 company.name(),
+                company.sirenNumber(),
                 (company.totalEmployees() == null ? 0 : company.totalEmployees()) + 1,
                 company.totalCo2Saved(),
-                company.unlockedBadge(),
-                company.createdAt()
+                company.totalPoints(),
+                company.totalKm(),
+                company.createdAt(),
+                company.logoPath()
         );
         companyRepository.update(updatedCompany);
 
@@ -153,10 +156,13 @@ public class UserService {
                 CompanyEntity updated = new CompanyEntity(
                         company.id(),
                         company.name(),
+                        company.sirenNumber(),
                         Math.max(0, (company.totalEmployees() == null ? 1 : company.totalEmployees()) - 1),
                         company.totalCo2Saved(),
-                        company.unlockedBadge(),
-                        company.createdAt()
+                        company.totalPoints(),
+                        company.totalKm(),
+                        company.createdAt(),
+                        company.logoPath()
                 );
                 companyRepository.update(updated);
             });
@@ -183,10 +189,13 @@ public class UserService {
                 CompanyEntity updated = new CompanyEntity(
                         company.id(),
                         company.name(),
+                        company.sirenNumber(),
                         Math.max(0, (company.totalEmployees() == null ? 1 : company.totalEmployees()) - 1),
                         company.totalCo2Saved(),
-                        company.unlockedBadge(),
-                        company.createdAt()
+                        company.totalPoints(),
+                        company.totalKm(),
+                        company.createdAt(),
+                        company.logoPath()
                 );
                 companyRepository.update(updated);
             });

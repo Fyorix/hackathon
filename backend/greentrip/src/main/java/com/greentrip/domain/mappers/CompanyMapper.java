@@ -1,5 +1,6 @@
 package com.greentrip.domain.mappers;
 
+import com.greentrip.domain.dtos.requests.CreateCompanyRequest;
 import com.greentrip.domain.dtos.responses.CompanyResponse;
 import com.greentrip.domain.entities.CompanyEntity;
 import com.greentrip.domain.models.CompanyModel;
@@ -12,12 +13,15 @@ public class CompanyMapper implements GenericMapper<CompanyModel, CompanyEntity>
     public CompanyEntity toEntity(CompanyModel model) {
         if (model == null) return null;
         return new CompanyEntity(
-            model.id,
-            model.name,
-            model.totalEmployees,
-            model.totalCo2Saved,
-            model.unlockedBadge,
-            model.createdAt
+                model.id,
+                model.name,
+                model.sirenNumber,
+                model.totalEmployees,
+                model.totalCo2Saved,
+                model.totalPoints,
+                model.totalKm,
+                model.createdAt,
+                model.logoPath
         );
     }
 
@@ -27,21 +31,42 @@ public class CompanyMapper implements GenericMapper<CompanyModel, CompanyEntity>
         CompanyModel model = new CompanyModel();
         model.id = entity.id();
         model.name = entity.name();
+        model.sirenNumber = entity.sirenNumber();
         model.totalEmployees = entity.totalEmployees();
         model.totalCo2Saved = entity.totalCo2Saved();
-        model.unlockedBadge = entity.unlockedBadge();
+        model.totalPoints = entity.totalPoints();
+        model.totalKm = entity.totalKm();
         model.createdAt = entity.createdAt();
+        model.logoPath = entity.logoPath();
         return model;
+    }
+
+    public CompanyEntity toEntity(CreateCompanyRequest request) {
+        if (request == null) return null;
+        return new CompanyEntity(
+                null,
+                request.companyName(),
+                request.sirenNumber(),
+                0,
+                0.0,
+                0,
+                0.0,
+                null,
+                request.logoPath() != null ? request.logoPath() : "default.png"
+        );
     }
 
     public CompanyResponse toResponse(CompanyEntity entity) {
         if (entity == null) return null;
         return new CompanyResponse(
-            entity.id(),
-            entity.name(),
-            entity.totalEmployees(),
-            entity.totalCo2Saved(),
-            entity.unlockedBadge()
+                entity.id(),
+                entity.name(),
+                entity.sirenNumber(),
+                entity.totalEmployees(),
+                entity.totalCo2Saved(),
+                entity.totalPoints(),
+                entity.totalKm(),
+                entity.logoPath()
         );
     }
 }
