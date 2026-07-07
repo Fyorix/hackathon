@@ -3,6 +3,7 @@ package com.greentrip.domain.services;
 import com.greentrip.domain.dtos.requests.CreateCompanyRequest;
 import com.greentrip.domain.dtos.requests.UpdateCompanyRequest;
 import com.greentrip.domain.entities.CompanyEntity;
+import com.greentrip.domain.entities.UserEntity;
 import com.greentrip.domain.mappers.CompanyMapper;
 import com.greentrip.domain.models.CompanyModel;
 import com.greentrip.infra.client.SireneClient;
@@ -41,8 +42,8 @@ public class CompanyService {
     public CompanyEntity getCompanyDetails(String email) {
         log.info("Fetching company statistics for user email: {}", email);
         return userRepository.findByEmail(email)
-                .map(user -> user.company)
-                .map(companyMapper::toEntity)
+                .map(UserEntity::companyId)
+                .flatMap(companyRepository::findEntityById)
                 .orElse(null);
     }
 

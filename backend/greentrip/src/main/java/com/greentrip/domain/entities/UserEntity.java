@@ -6,6 +6,7 @@ public record UserEntity(
     Long id,
     String name,
     String email,
+    String password,
     String role,
     Integer carbonPointsBalance,
     Double totalCo2Saved,

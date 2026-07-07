@@ -1,6 +1,8 @@
--- This file allow to write SQL commands that will be emitted in test and dev.
--- The commands are commented as their support depends of the database
--- insert into myentity (id, field) values(1, 'field-1');
--- insert into myentity (id, field) values(2, 'field-2');
--- insert into myentity (id, field) values(3, 'field-3');
--- alter sequence myentity_seq restart with 4;
+-- Seed data for testing and local development
+INSERT INTO COMPANIES (id, name, total_employees, total_co2_saved, created_at)
+VALUES (1, 'Takima', 1, 0.0, NOW())
+ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
+
+INSERT INTO USERS (id, name, email, role, password, carbon_points_balance, total_co2_saved, company_id, created_at)
+VALUES (1, 'Alex', 'alex@takima.fr', 'USER', 'password123', 120, 2.4, 1, NOW())
+ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email;

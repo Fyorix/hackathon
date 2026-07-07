@@ -17,6 +17,9 @@ public class UserModel extends BaseModel {
     @Column(nullable = false)
     public String role;
 
+    @Column(nullable = false)
+    public String password;
+
     @Column(name = "carbon_points_balance")
     public Integer carbonPointsBalance = 0;
 

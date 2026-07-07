@@ -17,7 +17,6 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import io.quarkus.security.Authenticated;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,12 +55,6 @@ public class TripResource {
         String email = sec.getUserPrincipal().getName();
         log.info("Fetching trips for user: {} (page: {}, size: {}, sortBy: {}, desc: {})", email, page, size, sortBy, desc);
         List<TripEntity> trips = tripService.getTrips(email, page, size, sortBy, desc);
-        if (trips == null || trips.isEmpty()) {
-            return List.of(
-                new TripResponse(12L, 15.0, 3.0, 150, "VELO", LocalDateTime.now().minusHours(2)),
-                new TripResponse(11L, 4.2, 0.84, 42, "TROTINETTE", LocalDateTime.now().minusDays(1))
-            );
-        }
         return trips.stream().map(tripMapper::toResponse).toList();
     }
 
@@ -75,9 +68,7 @@ public class TripResource {
         log.info("User {} declaring a new trip of {} km using {}", email, request.distanceKm(), request.type());
         TripEntity created = tripService.declareTrip(email, request);
         TripResponse response = tripMapper.toResponse(created);
-        return Response.status(Response.Status.CREATED).entity(
-            response != null ? response : new TripResponse(13L, request.distanceKm(), request.distanceKm() * 0.20, (int) (request.distanceKm() * 10), request.type(), LocalDateTime.now())
-        ).build();
+        return Response.status(Response.Status.CREATED).entity(response).build();
     }
 
     @DELETE

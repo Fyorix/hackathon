@@ -1,5 +1,6 @@
 package com.greentrip.domain.dtos.requests;
 
+import com.greentrip.domain.entities.TransportType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
@@ -10,9 +11,7 @@ public record TripRequest(
     @Schema(description = "Distance traveled in kilometers", example = "12.0")
     Double distanceKm,
 
-    @NotBlank(message = "Transport type is required")
-    @Pattern(regexp = "^(VELO|TROTINETTE|MARCHE|COVOITURAGE|TRANSPORTS_COMMUNS)$", 
-             message = "Invalid transport type")
+    @NotNull(message = "Transport type is required")
     @Schema(description = "Mode of transportation used", example = "VELO")
-    String type
+    TransportType type
 ) {}
