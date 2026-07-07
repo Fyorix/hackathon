@@ -74,9 +74,9 @@ public class CompanyService {
     @Transactional
     public CompanyEntity createCompany(CreateCompanyRequest request) {
         log.info("Creating new company: {}", request.companyName());
-        if (!sireneClient.isValidSiren(request.sirenNumber())) {
-            throw new WebApplicationException("Invalid or unknown SIREN number", Response.Status.BAD_REQUEST);
-        }
+//        if (!sireneClient.isValidSiren(request.sirenNumber())) {
+//            throw new WebApplicationException("Invalid or unknown SIREN number", Response.Status.BAD_REQUEST);
+//        }
         if (companyRepository.findByName(request.companyName()).isPresent()) {
             throw new WebApplicationException("Company name already in use", Response.Status.CONFLICT);
         }
