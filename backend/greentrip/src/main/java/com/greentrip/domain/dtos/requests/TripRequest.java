@@ -8,10 +8,10 @@ import jakarta.validation.constraints.*;
 public record TripRequest(
     @NotNull(message = "Distance cannot be null")
     @Positive(message = "Distance must be strictly greater than 0")
-    @Schema(description = "Distance traveled in kilometers", examples = "12.0")
+    @Schema(description = "Distance traveled in kilometers", examples = {"12.0"})
     Double distanceKm,
 
     @NotNull(message = "Transport type is required")
-    @Schema(description = "Mode of transportation used", examples = "VELO")
+    @Schema(description = "Mode of transportation used", examples = {"VELO"})
     TransportType type
 ) {}

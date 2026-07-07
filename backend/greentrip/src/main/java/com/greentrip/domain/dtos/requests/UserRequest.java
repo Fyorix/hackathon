@@ -7,11 +7,11 @@ import jakarta.validation.constraints.*;
 public record UserRequest(
     @NotBlank(message = "Name cannot be empty")
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
-    @Schema(description = "Display name", examples = "Alex")
+    @Schema(description = "Display name", examples = {"Alex"})
     String name,
 
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Invalid email format")
-    @Schema(description = "Professional email address", examples = "alex@takima.fr")
+    @Schema(description = "Professional email address", examples = {"alex@takima.fr"})
     String email
 ) {}
