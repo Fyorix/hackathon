@@ -6,8 +6,9 @@ import com.greentrip.domain.models.CompanyModel;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class CompanyMapper {
+public class CompanyMapper implements GenericMapper<CompanyModel, CompanyEntity> {
 
+    @Override
     public CompanyEntity toEntity(CompanyModel model) {
         if (model == null) return null;
         return new CompanyEntity(
@@ -20,6 +21,7 @@ public class CompanyMapper {
         );
     }
 
+    @Override
     public CompanyModel toModel(CompanyEntity entity) {
         if (entity == null) return null;
         CompanyModel model = new CompanyModel();

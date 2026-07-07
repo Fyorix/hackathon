@@ -50,9 +50,7 @@ public class UserResource {
         log.info("Registering new user account: {} ({})", request.name(), request.email());
         UserEntity created = userService.register(request);
         UserResponse response = userMapper.toResponse(created);
-        return Response.status(Response.Status.CREATED).entity(
-            response != null ? response : new UserResponse(1L, request.name(), request.email(), "USER", 0, 0.0)
-        ).build();
+        return Response.status(Response.Status.CREATED).entity(response).build();
     }
 
     @POST
@@ -92,6 +90,19 @@ public class UserResource {
         log.info("Updating profile details for user: {}", email);
         userService.updateProfile(email, request);
         return Response.ok().build();
+    }
+
+    @DELETE
+    @Path("/me")
+    @Operation(summary = "Delete my profile",
+               description = "Deletes the authenticated user's own account and associated data.")
+    @APIResponse(responseCode = "204", description = "Account deleted successfully")
+    @APIResponse(responseCode = "401", description = "Not authenticated")
+    public Response deleteMe(@Context SecurityContext sec) {
+        String email = sec.getUserPrincipal().getName();
+        log.info("Self-deletion request by user: {}", email);
+        userService.deleteUserByEmail(email);
+        return Response.noContent().build();
     }
 
     @DELETE

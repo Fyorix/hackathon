@@ -2,18 +2,26 @@ package com.greentrip.domain.mappers;
 
 import com.greentrip.domain.dtos.responses.UserResponse;
 import com.greentrip.domain.entities.UserEntity;
+import com.greentrip.domain.models.CompanyModel;
 import com.greentrip.domain.models.UserModel;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
-public class UserMapper {
+public class UserMapper implements GenericMapper<UserModel, UserEntity> {
 
+    @Inject
+    EntityManager entityManager;
+
+    @Override
     public UserEntity toEntity(UserModel model) {
         if (model == null) return null;
         return new UserEntity(
             model.id,
             model.name,
             model.email,
+            model.password,
             model.role,
             model.carbonPointsBalance,
             model.totalCo2Saved,
@@ -22,16 +30,23 @@ public class UserMapper {
         );
     }
 
+    @Override
     public UserModel toModel(UserEntity entity) {
         if (entity == null) return null;
         UserModel model = new UserModel();
         model.id = entity.id();
         model.name = entity.name();
         model.email = entity.email();
+        model.password = entity.password();
         model.role = entity.role();
         model.carbonPointsBalance = entity.carbonPointsBalance();
         model.totalCo2Saved = entity.totalCo2Saved();
         model.createdAt = entity.createdAt();
+        
+        if (entity.companyId() != null) {
+            model.company = entityManager.find(CompanyModel.class, entity.companyId());
+        }
+        
         return model;
     }
 
