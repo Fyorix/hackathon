@@ -40,22 +40,22 @@ async function submit() {
       <form @submit.prevent="submit" class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
-          <input v-model="name" type="text" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="name" />
+          <input v-model="name" type="text" class="w-full text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="name" />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-          <input v-model="email" type="email" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="email" />
+          <input v-model="email" type="email" class="w-full text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="email" />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
-          <input v-model="password" type="password" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="new-password" />
+          <input v-model="password" type="password" class="w-full text-black border-black border rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="new-password" />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">ID de l'entreprise</label>
-          <input v-model.number="companyId" type="number" min="1" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring" />
+          <input v-model.number="companyId" type="number" min="1" class="w-full border text-black border-black rounded px-3 py-2 focus:outline-none focus:ring" />
         </div>
         <div v-if="error" class="text-red-600 text-sm">{{ error }}</div>
-        <button type="submit" :disabled="loading" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:opacity-50">
+        <button type="submit" :disabled="loading" class="w-full border-black text-black bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:opacity-50">
           {{ loading ? 'Création...' : "S'inscrire" }}
         </button>
       </form>
