@@ -76,7 +76,7 @@ public class UserResource {
         log.info("Retrieving profile for authenticated user: {}", email);
         UserEntity user = userService.getProfile(email);
         UserResponse response = userMapper.toResponse(user);
-        return response != null ? response : new UserResponse(1L, "Alex", email, "USER", 450, 9.2);
+        return response != null ? response : new UserResponse(1L, "Alex", email, "USER", 450, 9.2, 45.0);
     }
 
     @PUT

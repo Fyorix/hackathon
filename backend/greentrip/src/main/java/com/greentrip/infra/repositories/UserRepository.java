@@ -31,14 +31,8 @@ public class UserRepository extends AbstractBaseRepository<UserModel, UserEntity
     /**
      * Retrieves the sorted and paged leaderboard of users for a given company.
      */
-    public java.util.List<UserEntity> findPagedLeaderboardByCompany(Long companyId, int page, int size, String sortBy, boolean descending) {
-        String sortField = switch (sortBy) {
-            case "points" -> "carbonPointsBalance";
-            case "co2" -> "totalCo2Saved";
-            case "km" -> "totalKm";
-            default -> "totalCo2Saved";
-        };
-        
+    public java.util.List<UserEntity> findPagedLeaderboardByCompany(Long companyId, int page, int size, com.greentrip.domain.entities.UserSortField sortBy, boolean descending) {
+        String sortField = sortBy.getFieldName();
         String direction = descending ? "desc" : "asc";
         log.debug("Database query: Fetching company {} users leaderboard (page={}, size={}, sort={}, desc={})", 
                 companyId, page, size, sortField, descending);
