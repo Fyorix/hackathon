@@ -3,7 +3,9 @@ package com.greentrip.domain.services;
 import com.greentrip.domain.dtos.requests.CreateCompanyRequest;
 import com.greentrip.domain.dtos.requests.UpdateCompanyRequest;
 import com.greentrip.domain.entities.CompanyEntity;
+import com.greentrip.domain.entities.CompanySortField;
 import com.greentrip.domain.entities.UserEntity;
+import com.greentrip.domain.entities.UserSortField;
 import com.greentrip.domain.mappers.CompanyMapper;
 import com.greentrip.domain.models.CompanyModel;
 import com.greentrip.infra.client.SireneClient;
@@ -60,7 +62,7 @@ public class CompanyService {
     /**
      * Gets the global leaderboard of companies.
      */
-    public List<CompanyEntity> getLeaderboard(int page, int size, com.greentrip.domain.entities.CompanySortField sortBy, boolean descending) {
+    public List<CompanyEntity> getLeaderboard(int page, int size, CompanySortField sortBy, boolean descending) {
         log.info("Fetching company leaderboard (page: {}, size: {})", page, size);
         log.debug("Leaderboard sorting parameters: sortBy={}, descending={}", sortBy, descending);
         return companyRepository.findPaged(page, size, sortBy.getFieldName(), descending).stream()
@@ -123,7 +125,7 @@ public class CompanyService {
     /**
      * Gets sorted leaderboard of users belonging to a company.
      */
-    public List<UserEntity> getCompanyUserLeaderboard(Long companyId, int page, int size, com.greentrip.domain.entities.UserSortField sortBy, boolean descending) {
+    public List<UserEntity> getCompanyUserLeaderboard(Long companyId, int page, int size, UserSortField sortBy, boolean descending) {
         log.info("Getting leaderboard of users for company id: {}", companyId);
         // Verify if company exists
         companyRepository.findByIdOptional(companyId)
