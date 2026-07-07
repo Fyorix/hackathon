@@ -25,6 +25,7 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             model.role,
             model.carbonPointsBalance,
             model.totalCo2Saved,
+            model.totalKm,
             model.company != null ? model.company.id : null,
             model.createdAt
         );
@@ -43,6 +44,7 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             model.role = entity.role();
             model.carbonPointsBalance = entity.carbonPointsBalance();
             model.totalCo2Saved = entity.totalCo2Saved();
+            model.totalKm = entity.totalKm();
             model.createdAt = entity.createdAt();
             if (entity.companyId() != null) {
                 model.company = entityManager.find(CompanyModel.class, entity.companyId());
@@ -59,7 +61,8 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             entity.email(),
             entity.role(),
             entity.carbonPointsBalance(),
-            entity.totalCo2Saved()
+            entity.totalCo2Saved(),
+            entity.totalKm()
         );
     }
 }

@@ -27,4 +27,27 @@ public class UserRepository extends AbstractBaseRepository<UserModel, UserEntity
         log.debug("Database action: Deleting user by email: {}", email);
         delete("email", email);
     }
+
+    /**
+     * Retrieves the sorted and paged leaderboard of users for a given company.
+     */
+    public java.util.List<UserEntity> findPagedLeaderboardByCompany(Long companyId, int page, int size, String sortBy, boolean descending) {
+        String sortField = switch (sortBy) {
+            case "points" -> "carbonPointsBalance";
+            case "co2" -> "totalCo2Saved";
+            case "km" -> "totalKm";
+            default -> "totalCo2Saved";
+        };
+        
+        String direction = descending ? "desc" : "asc";
+        log.debug("Database query: Fetching company {} users leaderboard (page={}, size={}, sort={}, desc={})", 
+                companyId, page, size, sortField, descending);
+        
+        return find("company.id = ?1 order by " + sortField + " " + direction, companyId)
+                .page(page, size)
+                .list()
+                .stream()
+                .map(mapper::toEntity)
+                .toList();
+    }
 }

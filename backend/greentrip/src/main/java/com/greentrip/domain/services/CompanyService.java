@@ -120,4 +120,16 @@ public class CompanyService {
         }
     }
 
+    /**
+     * Gets sorted leaderboard of users belonging to a company.
+     */
+    public List<UserEntity> getCompanyUserLeaderboard(Long companyId, int page, int size, String sortBy, boolean descending) {
+        log.info("Getting leaderboard of users for company id: {}", companyId);
+        // Verify if company exists
+        companyRepository.findByIdOptional(companyId)
+                .orElseThrow(() -> new WebApplicationException("Company not found", Response.Status.NOT_FOUND));
+        
+        return userRepository.findPagedLeaderboardByCompany(companyId, page, size, sortBy, descending);
+    }
+
 }

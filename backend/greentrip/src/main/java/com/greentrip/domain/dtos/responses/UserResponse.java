@@ -15,5 +15,7 @@ public record UserResponse(
     @Schema(description = "Available carbon points balance", examples = {"450"})
     Integer carbonPointsBalance,
     @Schema(description = "Total CO2 saved in kilograms", examples = {"9.2"})
-    Double totalCo2Saved
+    Double totalCo2Saved,
+    @Schema(description = "Total distance traveled in kilometers", examples = {"120.5"})
+    Double totalKm
 ) {}

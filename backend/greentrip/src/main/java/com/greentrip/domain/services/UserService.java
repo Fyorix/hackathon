@@ -54,6 +54,7 @@ public class UserService {
                 "USER",
                 0,
                 0.0,
+                0.0,
                 company.id(),
                 LocalDateTime.now()
         );
@@ -131,6 +132,7 @@ public class UserService {
                 existing.role(),
                 existing.carbonPointsBalance(),
                 existing.totalCo2Saved(),
+                existing.totalKm(),
                 existing.companyId(),
                 existing.createdAt()
         );

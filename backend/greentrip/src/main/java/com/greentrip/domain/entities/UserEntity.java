@@ -10,6 +10,7 @@ public record UserEntity(
     String role,
     Integer carbonPointsBalance,
     Double totalCo2Saved,
+    Double totalKm,
     Long companyId,
     LocalDateTime createdAt
 ) {}
