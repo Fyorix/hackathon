@@ -102,8 +102,6 @@ public class UserResourceIT {
         java.time.LocalTime endTime = java.time.LocalTime.of(18, 0);
         com.greentrip.domain.dtos.requests.JoinCompanyRequest request = new com.greentrip.domain.dtos.requests.JoinCompanyRequest(
             1L,
-            48.8566,
-            2.3522,
             48.8966,
             2.3922,
             startTime,

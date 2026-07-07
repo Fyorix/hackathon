@@ -1,8 +1,10 @@
 package com.greentrip.domain.dtos.requests;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import jakarta.validation.constraints.*;
 import java.time.LocalTime;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import jakarta.validation.constraints.NotNull;
 
 @Schema(name = "JoinCompanyRequest", description = "Payload sent when a user joins a company and sets their commute preferences")
 public record JoinCompanyRequest(
@@ -10,15 +12,11 @@ public record JoinCompanyRequest(
     @Schema(description = "ID of the company to join", examples = {"1"})
     Long companyId,
 
-    @Schema(description = "Latitude of home location", examples = {"48.8566"})
-    Double homeLat,
-
-    @Schema(description = "Longitude of home location", examples = {"2.3522"})
-    Double homeLng,
-
+    @NotNull(message = "Work latitude is required")
     @Schema(description = "Latitude of work location", examples = {"48.8966"})
     Double workLat,
 
+    @NotNull(message = "Work longitude is required")
     @Schema(description = "Longitude of work location", examples = {"2.3922"})
     Double workLng,
 

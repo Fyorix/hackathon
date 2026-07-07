@@ -1,4 +1,5 @@
 package com.greentrip.domain.models;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,8 @@ public class UserModel extends BaseModel {
     @Column(name = "total_km")
     public Double totalKm = 0.0;
 
-    @Column(name = "home_lat")
-    public Double homeLat;
-
-    @Column(name = "home_lng")
-    public Double homeLng;
+    @Column(name = "strava_refresh_token")
+    public String stravaRefreshToken;
 
     @Column(name = "work_lat")
     public Double workLat;
@@ -54,18 +52,6 @@ public class UserModel extends BaseModel {
 
     @Column(name = "work_end_time")
     public LocalTime workEndTime;
-
-    @Column(name = "strava_athlete_id")
-    public Long stravaAthleteId;
-
-    @Column(name = "strava_access_token")
-    public String stravaAccessToken;
-
-    @Column(name = "strava_refresh_token")
-    public String stravaRefreshToken;
-
-    @Column(name = "strava_token_expires_at")
-    public Long stravaTokenExpiresAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
