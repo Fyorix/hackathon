@@ -136,7 +136,7 @@ rtk gain --history      # View command history with savings
 rtk discover            # Analyze Claude Code sessions for missed RTK usage
 rtk proxy <cmd>         # Run command without filtering (for debugging)
 rtk init                # Add RTK instructions to CLAUDE.md
-rtk init --global       # Add RTK to ~/.claude/CLAUDE.md
+rtk init -g --gemini    # Add RTK hook + RTK.md globally for Gemini CLI
 ```
 
 ## Token Savings Overview
@@ -153,4 +153,6 @@ rtk init --global       # Add RTK to ~/.claude/CLAUDE.md
 | Network | curl, wget | 65-70% |
 
 Overall average: **60-90% token reduction** on common development operations.
+
+Note: this is the Gemini CLI equivalent of `CLAUDE.md` in this repo — same rtk rules apply. To get the automatic command-rewrite hook (not just this doc) on your own machine, run `rtk init -g --gemini`.
 <!-- /rtk-instructions -->
