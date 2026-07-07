@@ -140,4 +140,16 @@ public class CompanyService {
         return userRepository.findPagedLeaderboardByCompany(companyId, page, size, sortBy, descending);
     }
 
+    /**
+     * Searches companies by name with pagination, ensuring query is at least 4 characters.
+     */
+    public List<CompanyEntity> searchCompanies(String query, int page, int size) {
+        log.info("Searching companies with query: '{}' (page: {}, size: {})", query, page, size);
+        if (query == null || query.trim().length() < 4) {
+            log.warn("Search query too short: '{}'", query);
+            throw new WebApplicationException("Search query must be at least 4 characters long", Response.Status.BAD_REQUEST);
+        }
+        return companyRepository.findPagedByNameQuery(query.trim(), page, size);
+    }
+
 }

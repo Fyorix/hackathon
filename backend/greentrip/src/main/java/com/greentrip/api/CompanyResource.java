@@ -117,6 +117,26 @@ public class CompanyResource {
     }
 
     @GET
+    @Path("/search")
+    @PermitAll
+    @Operation(summary = "Search companies by name",
+               description = "Returns a paginated list of companies matching the query (at least 4 characters).")
+    @APIResponse(responseCode = "200", description = "Search results successfully retrieved")
+    @APIResponse(responseCode = "400", description = "Query length too short")
+    public List<CompanyResponse> searchCompanies(
+            @Parameter(description = "Search query (min 4 characters)", example = "Taki")
+            @QueryParam("query") String query,
+            @Parameter(description = "Page index", example = "0")
+            @QueryParam("page") @DefaultValue("0") int page,
+            @Parameter(description = "Page size", example = "10")
+            @QueryParam("size") @DefaultValue("10") int size) {
+        
+        log.info("Searching companies via API (query: '{}', page: {}, size: {})", query, page, size);
+        List<CompanyEntity> results = companyService.searchCompanies(query, page, size);
+        return results.stream().map(companyMapper::toResponse).toList();
+    }
+
+    @GET
     @Path("/leaderboard")
     @PermitAll
     @Operation(summary = "Get global leaderboard of companies",
