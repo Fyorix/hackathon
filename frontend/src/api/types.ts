@@ -79,10 +79,8 @@ export interface UserResponse {
 
 export interface JoinCompanyRequest {
   companyId: number
-  homeLat?: number
-  homeLng?: number
-  workLat?: number
-  workLng?: number
+  workLat: number
+  workLng: number
   workStartTime?: string // LocalTime
   workEndTime?: string // LocalTime
 }
