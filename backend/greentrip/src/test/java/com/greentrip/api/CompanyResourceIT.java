@@ -186,4 +186,40 @@ public class CompanyResourceIT {
         .then()
           .statusCode(404);
     }
+
+    @Test
+    public void testGetCompanyUserLeaderboard() {
+        // We can query company ID 1 (Takima) which is loaded by import.sql and check pagination/sorting
+        given()
+          .queryParam("page", 0)
+          .queryParam("size", 5)
+          .queryParam("sortBy", "co2")
+          .queryParam("desc", true)
+        .when()
+          .get("/api/companies/1/leaderboard")
+        .then()
+          .statusCode(200)
+          .body("size()", is(5))
+          .body("[0].name", notNullValue())
+          .body("[0].totalCo2Saved", notNullValue());
+
+        // Test sorting by points
+        given()
+          .queryParam("page", 0)
+          .queryParam("size", 3)
+          .queryParam("sortBy", "points")
+          .queryParam("desc", true)
+        .when()
+          .get("/api/companies/1/leaderboard")
+        .then()
+          .statusCode(200)
+          .body("size()", is(3));
+
+        // Test company not found
+        given()
+        .when()
+          .get("/api/companies/999999/leaderboard")
+        .then()
+          .statusCode(404);
+    }
 }

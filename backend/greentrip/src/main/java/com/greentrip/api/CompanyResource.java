@@ -3,8 +3,11 @@ package com.greentrip.api;
 import com.greentrip.domain.dtos.requests.CreateCompanyRequest;
 import com.greentrip.domain.dtos.requests.UpdateCompanyRequest;
 import com.greentrip.domain.dtos.responses.CompanyResponse;
+import com.greentrip.domain.dtos.responses.UserResponse;
 import com.greentrip.domain.entities.CompanyEntity;
+import com.greentrip.domain.entities.UserEntity;
 import com.greentrip.domain.mappers.CompanyMapper;
+import com.greentrip.domain.mappers.UserMapper;
 import com.greentrip.domain.services.CompanyService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -37,6 +40,9 @@ public class CompanyResource {
 
     @Inject
     CompanyMapper companyMapper;
+
+    @Inject
+    UserMapper userMapper;
 
     @GET
     @Path("/me")
@@ -126,13 +132,29 @@ public class CompanyResource {
         
         log.info("Retrieving general company leaderboard (page: {}, size: {}, sortBy: {}, desc: {})", page, size, sortBy, desc);
         List<CompanyEntity> leaderboard = companyService.getLeaderboard(page, size, sortBy, desc);
-        if (leaderboard == null || leaderboard.isEmpty()) {
-            return List.of(
-                new CompanyResponse(3L, "Takima", "123456789", 50, 145.2, 1200, 3500.5, "/images/logos/takima.png"),
-                new CompanyResponse(1L, "VéloFlex (Votre Boîte)", "111111111", 5, 9.2, 30, 42.0, "default.png"),
-                new CompanyResponse(2L, "EPITA", "222222222", 1000, 1200.0, 5000, 8000.0, "default.png")
-            );
-        }
         return leaderboard.stream().map(companyMapper::toResponse).toList();
+    }
+
+    @GET
+    @Path("/{id}/leaderboard")
+    @PermitAll
+    @Operation(summary = "Get user leaderboard for a company",
+               description = "Retrieves the sorted and paged ranking of all users/employees of a specific company")
+    @APIResponse(responseCode = "200", description = "User leaderboard successfully retrieved")
+    @APIResponse(responseCode = "404", description = "Company not found")
+    public List<UserResponse> getCompanyUserLeaderboard(
+            @PathParam("id") Long id,
+            @Parameter(description = "Page index", example = "0")
+            @QueryParam("page") @DefaultValue("0") int page,
+            @Parameter(description = "Page size", example = "10")
+            @QueryParam("size") @DefaultValue("10") int size,
+            @Parameter(description = "Sort field (points, co2, km)", example = "co2")
+            @QueryParam("sortBy") @DefaultValue("co2") String sortBy,
+            @Parameter(description = "Sort descending if true", example = "true")
+            @QueryParam("desc") @DefaultValue("true") boolean desc) {
+        
+        log.info("Retrieving user leaderboard for company id: {} (page: {}, size: {}, sortBy: {}, desc: {})", id, page, size, sortBy, desc);
+        List<UserEntity> leaderboard = companyService.getCompanyUserLeaderboard(id, page, size, sortBy, desc);
+        return leaderboard.stream().map(userMapper::toResponse).toList();
     }
 }

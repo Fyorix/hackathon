@@ -26,6 +26,9 @@ public class UserModel extends BaseModel {
     @Column(name = "total_co2_saved")
     public Double totalCo2Saved = 0.0;
 
+    @Column(name = "total_km")
+    public Double totalKm = 0.0;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     public CompanyModel company;
