@@ -63,7 +63,7 @@ VALUES (121, 'Zoe Morel', 'zoe.morel121@takima.fr', 'password123', 'USER', 4515,
 -- COMPANY: Decathlon (SIREN: 306138900)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (2, 'Decathlon', '306138900', 15000, 760.2, 41146, 4283.8, 'decathlon.png', NOW());
+VALUES (2, 'Decathlon', '306138900', 15000, 760.2, 41146, 4283.8, 'decathlon.webp', NOW());
 
 -- Users belonging to Decathlon
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -177,7 +177,7 @@ VALUES (166, 'Eva Thomas', 'eva.thomas166@doctolib.fr', 'password123', 'USER', 1
 -- COMPANY: Back Market (SIREN: 807923761)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (5, 'Back Market', '807923761', 300, 430.42, 26780, 2624.0, 'backmarket.png', NOW());
+VALUES (5, 'Back Market', '807923761', 300, 430.42, 26780, 2624.0, 'back_market.avif', NOW());
 
 -- Users belonging to Back Market
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -213,7 +213,7 @@ VALUES (180, 'Thomas Leroy', 'thomas.leroy180@backmarket.com', 'password123', 'U
 -- COMPANY: BlaBlaCar (SIREN: 491902095)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (6, 'BlaBlaCar', '491902095', 400, 565.39, 32800, 3339.7, 'blablacar.png', NOW());
+VALUES (6, 'BlaBlaCar', '491902095', 400, 565.39, 32800, 3339.7, 'blabla_car.webp', NOW());
 
 -- Users belonging to BlaBlaCar
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -253,7 +253,7 @@ VALUES (196, 'Camille Martin', 'camille.martin196@blablacar.com', 'password123',
 -- COMPANY: Swile (SIREN: 824042454)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (7, 'Swile', '824042454', 120, 386.67, 21542, 2241.9, 'swile.png', NOW());
+VALUES (7, 'Swile', '824042454', 120, 386.67, 21542, 2241.9, 'swile.jpg', NOW());
 
 -- Users belonging to Swile
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -283,7 +283,7 @@ VALUES (207, 'Ines Laurent', 'ines.laurent207@swile.co', 'password123', 'USER', 
 -- COMPANY: PayFit (SIREN: 810697203)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (8, 'PayFit', '810697203', 150, 666.66, 37025, 3666.3, 'payfit.png', NOW());
+VALUES (8, 'PayFit', '810697203', 150, 666.66, 37025, 3666.3, 'payfit.jfif', NOW());
 
 -- Users belonging to PayFit
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -317,7 +317,7 @@ VALUES (220, 'Charles Morel', 'charles.morel220@payfit.com', 'password123', 'USE
 -- COMPANY: Yuka (SIREN: 817751913)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (9, 'Yuka', '817751913', 11, 501.1, 28672, 2963.7, 'yuka.png', NOW());
+VALUES (9, 'Yuka', '817751913', 11, 501.1, 28672, 2963.7, 'yuka.jfif', NOW());
 
 -- Users belonging to Yuka
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -363,7 +363,7 @@ VALUES (235, 'Lea Bonnet', 'lea.bonnet235@lvmh.fr', 'password123', 'USER', 662, 
 -- COMPANY: SNCF (SIREN: 552049447)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (11, 'SNCF', '552049447', 60000, 1200.13, 75128, 7233.5, 'sncf.png', NOW());
+VALUES (11, 'SNCF', '552049447', 60000, 1200.13, 75128, 7233.5, 'sncf.webp', NOW());
 
 -- Users belonging to SNCF
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -421,7 +421,7 @@ VALUES (260, 'Emma Moreau', 'emma.moreau260@sncf.fr', 'password123', 'USER', 198
 -- COMPANY: EDF (SIREN: 552081317)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (12, 'EDF', '552081317', 45000, 782.67, 48460, 4865.3, 'edf.png', NOW());
+VALUES (12, 'EDF', '552081317', 45000, 782.67, 48460, 4865.3, 'edf.webp', NOW());
 
 -- Users belonging to EDF
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -499,7 +499,7 @@ VALUES (291, 'Pierre David', 'pierre.david291@mirakl.com', 'password123', 'USER'
 -- COMPANY: ContentSquare (SIREN: 512217696)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (14, 'ContentSquare', '512217696', 500, 796.6, 48627, 4836.0, 'contentsquare.png', NOW());
+VALUES (14, 'ContentSquare', '512217696', 500, 796.6, 48627, 4836.0, 'contentsquare.webp', NOW());
 
 -- Users belonging to ContentSquare
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -535,7 +535,7 @@ VALUES (305, 'Guillaume Durand', 'guillaume.durand305@contentsquare.com', 'passw
 -- COMPANY: ManoMano (SIREN: 752943269)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (15, 'ManoMano', '752943269', 450, 648.2, 33794, 3571.1, 'manomano.png', NOW());
+VALUES (15, 'ManoMano', '752943269', 450, 648.2, 33794, 3571.1, 'manomano.webp', NOW());
 
 -- Users belonging to ManoMano
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -593,7 +593,7 @@ VALUES (326, 'Lea Roux', 'lea.roux326@openclassrooms.com', 'password123', 'USER'
 -- COMPANY: Evaneos (SIREN: 513191114)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (17, 'Evaneos', '513191114', 60, 565.32, 29526, 3216.0, 'evaneos.png', NOW());
+VALUES (17, 'Evaneos', '513191114', 60, 565.32, 29526, 3216.0, 'evaneos.jpeg', NOW());
 
 -- Users belonging to Evaneos
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
@@ -657,7 +657,7 @@ VALUES (350, 'Lea Roussel', 'lea.roussel350@veepee.com', 'password123', 'USER', 
 -- COMPANY: Luko (SIREN: 824141678)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (19, 'Luko', '824141678', 15, 346.29, 19368, 1972.1, 'luko.png', NOW());
+VALUES (19, 'Luko', '824141678', 15, 346.29, 19368, 1972.1, 'luko.webp', NOW());
 
 -- Users belonging to Luko
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
