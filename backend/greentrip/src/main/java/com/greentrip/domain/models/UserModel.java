@@ -1,6 +1,7 @@
 package com.greentrip.domain.models;
 
 import jakarta.persistence.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,27 @@ public class UserModel extends BaseModel {
 
     @Column(name = "total_km")
     public Double totalKm = 0.0;
+
+    @Column(name = "strava_refresh_token")
+    public String stravaRefreshToken;
+
+    @Column(name = "home_lat")
+    public Double homeLat;
+
+    @Column(name = "home_lng")
+    public Double homeLng;
+
+    @Column(name = "work_lat")
+    public Double workLat;
+
+    @Column(name = "work_lng")
+    public Double workLng;
+
+    @Column(name = "work_start_time")
+    public LocalTime workStartTime;
+
+    @Column(name = "work_end_time")
+    public LocalTime workEndTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
