@@ -258,4 +258,51 @@ public class CompanyResourceIT {
           .body("size()", is(1))
           .body("[0].name", is("Takima"));
     }
+
+    @Test
+    public void testSearchCompanyUsersSuccess() {
+        given()
+          .queryParam("query", "alex")
+          .queryParam("page", 0)
+          .queryParam("size", 5)
+        .when()
+          .get("/api/companies/1/leaderboard/search")
+        .then()
+          .statusCode(200)
+          .body("size()", is(1))
+          .body("[0].name", is("Alex"))
+          .body("[0].email", is("alex@takima.fr"));
+    }
+
+    @Test
+    public void testSearchCompanyUsersTooShortReturns400() {
+        given()
+          .queryParam("query", "ale")
+        .when()
+          .get("/api/companies/1/leaderboard/search")
+        .then()
+          .statusCode(400);
+    }
+
+    @Test
+    public void testSearchCompanyUsersCaseInsensitive() {
+        given()
+          .queryParam("query", "ALEX")
+        .when()
+          .get("/api/companies/1/leaderboard/search")
+        .then()
+          .statusCode(200)
+          .body("size()", is(1))
+          .body("[0].name", is("Alex"));
+    }
+
+    @Test
+    public void testSearchCompanyUsersCompanyNotFoundReturns404() {
+        given()
+          .queryParam("query", "alex")
+        .when()
+          .get("/api/companies/999999/leaderboard/search")
+        .then()
+          .statusCode(404);
+    }
 }

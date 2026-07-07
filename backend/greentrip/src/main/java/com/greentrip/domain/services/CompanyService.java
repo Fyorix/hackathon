@@ -152,4 +152,20 @@ public class CompanyService {
         return companyRepository.findPagedByNameQuery(query.trim(), page, size);
     }
 
+    /**
+     * Searches users within a company leaderboard by name with pagination, ensuring query is at least 4 characters.
+     */
+    public List<UserEntity> searchCompanyUsers(Long companyId, String query, int page, int size) {
+        log.info("Searching users in company ID {} with query: '{}' (page: {}, size: {})", companyId, query, page, size);
+        // Verify if company exists
+        companyRepository.findByIdOptional(companyId)
+                .orElseThrow(() -> new WebApplicationException("Company not found", Response.Status.NOT_FOUND));
+
+        if (query == null || query.trim().length() < 4) {
+            log.warn("User search query too short: '{}'", query);
+            throw new WebApplicationException("Search query must be at least 4 characters long", Response.Status.BAD_REQUEST);
+        }
+        return userRepository.findPagedUsersByNameQueryAndCompany(companyId, query.trim(), page, size);
+    }
+
 }

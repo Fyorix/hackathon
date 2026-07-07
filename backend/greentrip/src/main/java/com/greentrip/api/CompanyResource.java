@@ -179,4 +179,26 @@ public class CompanyResource {
         List<UserEntity> leaderboard = companyService.getCompanyUserLeaderboard(id, page, size, sortBy, desc);
         return leaderboard.stream().map(userMapper::toResponse).toList();
     }
+
+    @GET
+    @Path("/{id}/leaderboard/search")
+    @PermitAll
+    @Operation(summary = "Search users within a company leaderboard",
+               description = "Returns a paginated list of users in a company matching the search query (min 4 characters).")
+    @APIResponse(responseCode = "200", description = "Search results successfully retrieved")
+    @APIResponse(responseCode = "400", description = "Query length too short")
+    @APIResponse(responseCode = "404", description = "Company not found")
+    public List<UserResponse> searchCompanyUsers(
+            @PathParam("id") Long id,
+            @Parameter(description = "Search query (min 4 characters)", example = "Alex")
+            @QueryParam("query") String query,
+            @Parameter(description = "Page index", example = "0")
+            @QueryParam("page") @DefaultValue("0") int page,
+            @Parameter(description = "Page size", example = "10")
+            @QueryParam("size") @DefaultValue("10") int size) {
+        
+        log.info("Searching users in company ID {} leaderboard via API (query: '{}', page: {}, size: {})", id, query, page, size);
+        List<UserEntity> results = companyService.searchCompanyUsers(id, query, page, size);
+        return results.stream().map(userMapper::toResponse).toList();
+    }
 }
