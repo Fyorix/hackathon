@@ -43,13 +43,13 @@ public class TripResource {
     @APIResponse(responseCode = "401", description = "Not authenticated")
     public List<TripResponse> getTrips(
             @Context SecurityContext sec,
-            @Parameter(description = "Page index", examples = {"0"}) 
+            @Parameter(description = "Page index", example = "0") 
             @QueryParam("page") @DefaultValue("0") int page,
-            @Parameter(description = "Page size", examples = {"10"}) 
+            @Parameter(description = "Page size", example = "10") 
             @QueryParam("size") @DefaultValue("10") int size,
-            @Parameter(description = "Sort field", examples = {"createdAt"}) 
+            @Parameter(description = "Sort field", example = "createdAt") 
             @QueryParam("sortBy") @DefaultValue("createdAt") String sortBy,
-            @Parameter(description = "Sort descending if true", examples = {"true"}) 
+            @Parameter(description = "Sort descending if true", example = "true") 
             @QueryParam("desc") @DefaultValue("true") boolean desc) {
         
         String email = sec.getUserPrincipal().getName();
