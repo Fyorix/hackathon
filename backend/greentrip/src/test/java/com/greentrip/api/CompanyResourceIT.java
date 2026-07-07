@@ -49,7 +49,7 @@ public class CompanyResourceIT {
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testCreateCompanyIntegrationFlow() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("VeloFlex", "111222333", "veloflex.png");
+        CreateCompanyRequest request = new CreateCompanyRequest("VeloFlex", "111222333", "veloflex.png", 48.8566, 2.3522);
 
         // Act
         Long createdId = given()
@@ -76,7 +76,7 @@ public class CompanyResourceIT {
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testCreateCompanyDuplicateNameReturnsConflict() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("EPITA", "999999999", null);
+        CreateCompanyRequest request = new CreateCompanyRequest("EPITA", "999999999", null, null, null);
 
         // Act & Assert
         given()
@@ -92,7 +92,7 @@ public class CompanyResourceIT {
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testCreateCompanyInvalidPayloadReturnsBadRequest() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("", "", null);
+        CreateCompanyRequest request = new CreateCompanyRequest("", "", null, null, null);
 
         // Act & Assert
         given()
@@ -129,7 +129,7 @@ public class CompanyResourceIT {
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testUpdateCompanyIntegrationFlow() {
         // Arrange
-        UpdateCompanyRequest request = new UpdateCompanyRequest("EPITA Renamed", "new-logo.png");
+        UpdateCompanyRequest request = new UpdateCompanyRequest("EPITA Renamed", "new-logo.png", 48.9, 2.4);
 
         // Act
         given()
@@ -151,7 +151,7 @@ public class CompanyResourceIT {
     @Test
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testUpdateCompanyNotFoundReturns404() {
-        UpdateCompanyRequest request = new UpdateCompanyRequest("Ghost", null);
+        UpdateCompanyRequest request = new UpdateCompanyRequest("Ghost", null, null, null);
 
         given()
           .contentType(ContentType.JSON)
@@ -183,6 +183,125 @@ public class CompanyResourceIT {
         given()
         .when()
           .delete("/api/companies/999999")
+        .then()
+          .statusCode(404);
+    }
+
+    @Test
+    public void testGetCompanyUserLeaderboard() {
+        // We can query company ID 1 (Takima) which is loaded by import.sql and check pagination/sorting
+        given()
+          .queryParam("page", 0)
+          .queryParam("size", 5)
+          .queryParam("sortBy", "CO2")
+          .queryParam("desc", true)
+        .when()
+          .get("/api/companies/1/leaderboard")
+        .then()
+          .statusCode(200)
+          .body("size()", is(5))
+          .body("[0].name", notNullValue())
+          .body("[0].totalCo2Saved", notNullValue());
+
+        // Test sorting by points
+        given()
+          .queryParam("page", 0)
+          .queryParam("size", 3)
+          .queryParam("sortBy", "POINTS")
+          .queryParam("desc", true)
+        .when()
+          .get("/api/companies/1/leaderboard")
+        .then()
+          .statusCode(200)
+          .body("size()", is(3));
+
+        // Test company not found
+        given()
+        .when()
+          .get("/api/companies/999999/leaderboard")
+        .then()
+          .statusCode(404);
+    }
+
+    @Test
+    public void testSearchCompaniesSuccess() {
+        given()
+          .queryParam("query", "deca")
+          .queryParam("page", 0)
+          .queryParam("size", 5)
+        .when()
+          .get("/api/companies/search")
+        .then()
+          .statusCode(200)
+          .body("size()", is(1))
+          .body("[0].name", is("Decathlon"));
+    }
+
+    @Test
+    public void testSearchCompaniesQueryTooShortReturns400() {
+        given()
+          .queryParam("query", "dec")
+        .when()
+          .get("/api/companies/search")
+        .then()
+          .statusCode(400);
+    }
+
+    @Test
+    public void testSearchCompaniesCaseInsensitive() {
+        given()
+          .queryParam("query", "TAKI")
+        .when()
+          .get("/api/companies/search")
+        .then()
+          .statusCode(200)
+          .body("size()", is(1))
+          .body("[0].name", is("Takima"));
+    }
+
+    @Test
+    public void testSearchCompanyUsersSuccess() {
+        given()
+          .queryParam("query", "alex")
+          .queryParam("page", 0)
+          .queryParam("size", 5)
+        .when()
+          .get("/api/companies/1/leaderboard/search")
+        .then()
+          .statusCode(200)
+          .body("size()", is(1))
+          .body("[0].name", is("Alex"))
+          .body("[0].email", is("alex@takima.fr"));
+    }
+
+    @Test
+    public void testSearchCompanyUsersTooShortReturns400() {
+        given()
+          .queryParam("query", "ale")
+        .when()
+          .get("/api/companies/1/leaderboard/search")
+        .then()
+          .statusCode(400);
+    }
+
+    @Test
+    public void testSearchCompanyUsersCaseInsensitive() {
+        given()
+          .queryParam("query", "ALEX")
+        .when()
+          .get("/api/companies/1/leaderboard/search")
+        .then()
+          .statusCode(200)
+          .body("size()", is(1))
+          .body("[0].name", is("Alex"));
+    }
+
+    @Test
+    public void testSearchCompanyUsersCompanyNotFoundReturns404() {
+        given()
+          .queryParam("query", "alex")
+        .when()
+          .get("/api/companies/999999/leaderboard/search")
         .then()
           .statusCode(404);
     }

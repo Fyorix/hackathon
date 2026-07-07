@@ -31,4 +31,17 @@ public class CompanyRepository extends AbstractBaseRepository<CompanyModel, Comp
         log.debug("Database query: Fetching company by SIREN number: {}", sirenNumber);
         return findEntityByField("sirenNumber", sirenNumber);
     }
+
+    /**
+     * Finds companies whose name contains the query, case-insensitive, with pagination.
+     */
+    public java.util.List<CompanyEntity> findPagedByNameQuery(String query, int page, int size) {
+        log.debug("Database query: Searching companies matching '{}' (page={}, size={})", query, page, size);
+        return find("lower(name) like lower(?1)", "%" + query + "%")
+                .page(page, size)
+                .list()
+                .stream()
+                .map(mapper::toEntity)
+                .toList();
+    }
 }

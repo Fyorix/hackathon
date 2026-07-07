@@ -69,6 +69,17 @@ public class UserSecurityTest {
           .statusCode(401);
     }
 
+    @Test
+    public void testJoinCompanyRequiresAuthentication() {
+        given()
+          .contentType(ContentType.JSON)
+          .body("{\"companyId\": 1}")
+        .when()
+          .post("/api/users/join-company")
+        .then()
+          .statusCode(401);
+    }
+
     // --- ROLE SECURED ENDPOINTS (RolesAllowed("ADMIN")) ---
 
     @Test

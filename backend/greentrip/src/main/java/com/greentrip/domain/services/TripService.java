@@ -69,6 +69,7 @@ public class TripService {
 
         userModel.carbonPointsBalance += pointsEarned;
         userModel.totalCo2Saved += co2Saved;
+        userModel.totalKm += distanceKm;
 
         if (userModel.company != null) {
             CompanyModel company = userModel.company;
@@ -110,6 +111,7 @@ public class TripService {
         UserModel userModel = tripModel.user;
         userModel.carbonPointsBalance = Math.max(0, userModel.carbonPointsBalance - tripModel.pointsEarned);
         userModel.totalCo2Saved = Math.max(0.0, userModel.totalCo2Saved - tripModel.co2Saved);
+        userModel.totalKm = Math.max(0.0, userModel.totalKm - tripModel.distanceKm);
 
         if (userModel.company != null) {
             CompanyModel company = userModel.company;

@@ -39,11 +39,14 @@ public class UserService {
             throw new WebApplicationException("Email already exists", 409);
         }
 
-        CompanyEntity company = companyRepository.findEntityById(request.companyId())
-                .orElseThrow(() -> {
-                    log.warn("Company with ID {} not found", request.companyId());
-                    return new WebApplicationException("Company not found", 400);
-                });
+        CompanyEntity company = null;
+        if (request.companyId() != null) {
+            company = companyRepository.findEntityById(request.companyId())
+                    .orElseThrow(() -> {
+                        log.warn("Company with ID {} not found", request.companyId());
+                        return new WebApplicationException("Company not found", 400);
+                    });
+        }
 
         // Create UserEntity directly in the service
         UserEntity userEntity = new UserEntity(
@@ -54,23 +57,35 @@ public class UserService {
                 "USER",
                 0,
                 0.0,
-                company.id(),
+                0.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                company != null ? company.id() : null,
                 LocalDateTime.now()
         );
 
-        // Update company employee count on the CompanyEntity directly
-        CompanyEntity updatedCompany = new CompanyEntity(
-                company.id(),
-                company.name(),
-                company.sirenNumber(),
-                (company.totalEmployees() == null ? 0 : company.totalEmployees()) + 1,
-                company.totalCo2Saved(),
-                company.totalPoints(),
-                company.totalKm(),
-                company.createdAt(),
-                company.logoPath()
-        );
-        companyRepository.update(updatedCompany);
+        if (company != null) {
+            // Update company employee count on the CompanyEntity directly
+            CompanyEntity updatedCompany = new CompanyEntity(
+                    company.id(),
+                    company.name(),
+                    company.sirenNumber(),
+                    Integer.valueOf((company.totalEmployees() == null ? 0 : company.totalEmployees()) + 1),
+                    company.totalCo2Saved(),
+                    company.totalPoints(),
+                    company.totalKm(),
+                    company.createdAt(),
+                    company.latitude(),
+                    company.longitude(),
+                    company.logoPath()
+            );
+            companyRepository.update(updatedCompany);
+        }
 
         // Save UserEntity via the repository create method (which calls persist internally)
         UserEntity savedUser = userRepository.create(userEntity);
@@ -96,7 +111,7 @@ public class UserService {
         }
 
         log.info("Successfully authenticated user: {}", user.email());
-        return new TokenResponse("mock-jwt-token-for-" + user.email(), "Bearer", 3600L);
+        return new TokenResponse("mock-jwt-token-for-" + user.email(), "Bearer", 86400L);
     }
 
     /**
@@ -131,6 +146,14 @@ public class UserService {
                 existing.role(),
                 existing.carbonPointsBalance(),
                 existing.totalCo2Saved(),
+                existing.totalKm(),
+                existing.stravaRefreshToken(),
+                existing.homeLat(),
+                existing.homeLng(),
+                existing.workLat(),
+                existing.workLng(),
+                existing.workStartTime(),
+                existing.workEndTime(),
                 existing.companyId(),
                 existing.createdAt()
         );
@@ -157,11 +180,13 @@ public class UserService {
                         company.id(),
                         company.name(),
                         company.sirenNumber(),
-                        Math.max(0, (company.totalEmployees() == null ? 1 : company.totalEmployees()) - 1),
+                        Integer.valueOf(Math.max(0, (company.totalEmployees() == null ? 1 : company.totalEmployees()) - 1)),
                         company.totalCo2Saved(),
                         company.totalPoints(),
                         company.totalKm(),
                         company.createdAt(),
+                        company.latitude(),
+                        company.longitude(),
                         company.logoPath()
                 );
                 companyRepository.update(updated);
@@ -190,11 +215,13 @@ public class UserService {
                         company.id(),
                         company.name(),
                         company.sirenNumber(),
-                        Math.max(0, (company.totalEmployees() == null ? 1 : company.totalEmployees()) - 1),
+                        Integer.valueOf(Math.max(0, (company.totalEmployees() == null ? 1 : company.totalEmployees()) - 1)),
                         company.totalCo2Saved(),
                         company.totalPoints(),
                         company.totalKm(),
                         company.createdAt(),
+                        company.latitude(),
+                        company.longitude(),
                         company.logoPath()
                 );
                 companyRepository.update(updated);
@@ -203,5 +230,79 @@ public class UserService {
 
         userRepository.deleteByEmail(email);
         log.info("Successfully deleted user by email: {}", email);
+    }
+
+    /**
+     * Associates a user with a company and sets their commute coordinates and working hours.
+     */
+    @Transactional
+    public UserEntity joinCompany(String email, com.greentrip.domain.dtos.requests.JoinCompanyRequest request) {
+        log.info("User {} joining company ID {}", email, request.companyId());
+        
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new WebApplicationException("User not found", 404));
+        
+        CompanyEntity company = companyRepository.findEntityById(request.companyId())
+                .orElseThrow(() -> new WebApplicationException("Company not found", 400));
+        
+        // If user is already in a company, we should decrement that company's employee count first
+        if (user.companyId() != null && !user.companyId().equals(request.companyId())) {
+            companyRepository.findEntityById(user.companyId()).ifPresent(oldCompany -> {
+                CompanyEntity updatedOld = new CompanyEntity(
+                        oldCompany.id(),
+                        oldCompany.name(),
+                        oldCompany.sirenNumber(),
+                        Integer.valueOf(Math.max(0, (oldCompany.totalEmployees() == null ? 1 : oldCompany.totalEmployees()) - 1)),
+                        oldCompany.totalCo2Saved(),
+                        oldCompany.totalPoints(),
+                        oldCompany.totalKm(),
+                        oldCompany.createdAt(),
+                        oldCompany.latitude(),
+                        oldCompany.longitude(),
+                        oldCompany.logoPath()
+                );
+                companyRepository.update(updatedOld);
+            });
+        }
+        
+        // Increment new company's employee count if user wasn't already in it
+        if (user.companyId() == null || !user.companyId().equals(request.companyId())) {
+            CompanyEntity updatedNew = new CompanyEntity(
+                    company.id(),
+                    company.name(),
+                    company.sirenNumber(),
+                    Integer.valueOf((company.totalEmployees() == null ? 0 : company.totalEmployees()) + 1),
+                    company.totalCo2Saved(),
+                    company.totalPoints(),
+                    company.totalKm(),
+                    company.createdAt(),
+                    company.latitude(),
+                    company.longitude(),
+                    company.logoPath()
+            );
+            companyRepository.update(updatedNew);
+        }
+        
+        UserEntity updatedUser = new UserEntity(
+                user.id(),
+                user.name(),
+                user.email(),
+                user.password(),
+                user.role(),
+                user.carbonPointsBalance(),
+                user.totalCo2Saved(),
+                user.totalKm(),
+                user.stravaRefreshToken(),
+                request.homeLat(),
+                request.homeLng(),
+                request.workLat(),
+                request.workLng(),
+                request.workStartTime(),
+                request.workEndTime(),
+                company.id(),
+                user.createdAt()
+        );
+        
+        return userRepository.update(updatedUser);
     }
 }

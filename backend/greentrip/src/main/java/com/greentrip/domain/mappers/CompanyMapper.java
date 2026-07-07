@@ -21,6 +21,8 @@ public class CompanyMapper implements GenericMapper<CompanyModel, CompanyEntity>
                 model.totalPoints,
                 model.totalKm,
                 model.createdAt,
+                model.latitude,
+                model.longitude,
                 model.logoPath
         );
     }
@@ -39,6 +41,8 @@ public class CompanyMapper implements GenericMapper<CompanyModel, CompanyEntity>
         if (entity.createdAt() != null) {
             model.createdAt = entity.createdAt();
         }
+        model.latitude = entity.latitude();
+        model.longitude = entity.longitude();
         model.logoPath = entity.logoPath();
         return model;
     }
@@ -54,6 +58,8 @@ public class CompanyMapper implements GenericMapper<CompanyModel, CompanyEntity>
                 0,
                 0.0,
                 null,
+                request.latitude(),
+                request.longitude(),
                 request.logoPath() != null ? request.logoPath() : "default.png"
         );
     }
@@ -68,6 +74,8 @@ public class CompanyMapper implements GenericMapper<CompanyModel, CompanyEntity>
                 entity.totalCo2Saved(),
                 entity.totalPoints(),
                 entity.totalKm(),
+                entity.latitude(),
+                entity.longitude(),
                 entity.logoPath()
         );
     }

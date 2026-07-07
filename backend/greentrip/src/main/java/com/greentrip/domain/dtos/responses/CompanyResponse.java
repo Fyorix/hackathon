@@ -18,6 +18,10 @@ public record CompanyResponse(
     Integer totalPoints,
     @Schema(description = "Total kilometers traveled by all employees", examples = {"3500.5"})
     Double totalKm,
+    @Schema(description = "Latitude of the company office", examples = {"48.8566"})
+    Double latitude,
+    @Schema(description = "Longitude of the company office", examples = {"2.3522"})
+    Double longitude,
     @Schema(description = "Path to the company's logo image", examples = {"/images/logos/takima.png"})
     String logoPath
 ) {}
