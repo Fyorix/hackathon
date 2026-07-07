@@ -52,9 +52,9 @@ public class CompanyServiceTest {
     @Test
     public void testCreateCompanySuccess() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("VeloFlex", "111222333", "logo.png");
-        CompanyEntity toPersist = new CompanyEntity(null, "VeloFlex", "111222333", 0, 0.0, 0, 0.0, null, "logo.png");
-        CompanyEntity persisted = new CompanyEntity(1L, "VeloFlex", "111222333", 0, 0.0, 0, 0.0, null, "logo.png");
+        CreateCompanyRequest request = new CreateCompanyRequest("VeloFlex", "111222333", "logo.png", 48.8566, 2.3522);
+        CompanyEntity toPersist = new CompanyEntity(null, "VeloFlex", "111222333", 0, 0.0, 0, 0.0, null, 48.8566, 2.3522, "logo.png");
+        CompanyEntity persisted = new CompanyEntity(1L, "VeloFlex", "111222333", 0, 0.0, 0, 0.0, null, 48.8566, 2.3522, "logo.png");
 
         when(companyRepository.findByName("VeloFlex")).thenReturn(Optional.empty());
         when(companyRepository.findBySirenNumber("111222333")).thenReturn(Optional.empty());
@@ -74,8 +74,8 @@ public class CompanyServiceTest {
     @Test
     public void testCreateCompanyDuplicateNameThrowsConflict() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("Takima", "111222333", null);
-        CompanyEntity existing = new CompanyEntity(1L, "Takima", "999888777", 0, 0.0, 0, 0.0, null, "default.png");
+        CreateCompanyRequest request = new CreateCompanyRequest("Takima", "111222333", null, null, null);
+        CompanyEntity existing = new CompanyEntity(1L, "Takima", "999888777", 0, 0.0, 0, 0.0, null, 48.8706, 2.3323, "default.png");
         when(companyRepository.findByName("Takima")).thenReturn(Optional.of(existing));
 
         // Act & Assert
@@ -88,8 +88,8 @@ public class CompanyServiceTest {
     @Test
     public void testCreateCompanyDuplicateSirenThrowsConflict() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("VeloFlex", "999888777", null);
-        CompanyEntity existing = new CompanyEntity(2L, "OtherCorp", "999888777", 0, 0.0, 0, 0.0, null, "default.png");
+        CreateCompanyRequest request = new CreateCompanyRequest("VeloFlex", "999888777", null, null, null);
+        CompanyEntity existing = new CompanyEntity(2L, "OtherCorp", "999888777", 0, 0.0, 0, 0.0, null, 48.8, 2.3, "default.png");
         when(companyRepository.findByName("VeloFlex")).thenReturn(Optional.empty());
         when(companyRepository.findBySirenNumber("999888777")).thenReturn(Optional.of(existing));
 
@@ -106,7 +106,7 @@ public class CompanyServiceTest {
         CompanyModel model = new CompanyModel();
         model.id = 1L;
         model.name = "Takima";
-        CompanyEntity mapped = new CompanyEntity(1L, "Takima", "123456789", 50, 145.2, 1200, 3500.5, null, "logo.png");
+        CompanyEntity mapped = new CompanyEntity(1L, "Takima", "123456789", 50, 145.2, 1200, 3500.5, null, 48.8706, 2.3323, "logo.png");
         when(companyRepository.findByIdOptional(1L)).thenReturn(Optional.of(model));
         when(companyMapper.toEntity(model)).thenReturn(mapped);
 
@@ -135,8 +135,8 @@ public class CompanyServiceTest {
         model.id = 1L;
         model.name = "OldName";
         model.logoPath = "old.png";
-        UpdateCompanyRequest request = new UpdateCompanyRequest("NewName", "new.png");
-        CompanyEntity mapped = new CompanyEntity(1L, "NewName", "123456789", 0, 0.0, 0, 0.0, null, "new.png");
+        UpdateCompanyRequest request = new UpdateCompanyRequest("NewName", "new.png", 48.9, 2.4);
+        CompanyEntity mapped = new CompanyEntity(1L, "NewName", "123456789", 0, 0.0, 0, 0.0, null, 48.9, 2.4, "new.png");
 
         when(companyRepository.findByIdOptional(1L)).thenReturn(Optional.of(model));
         when(companyRepository.findByName("NewName")).thenReturn(Optional.empty());
@@ -155,7 +155,7 @@ public class CompanyServiceTest {
     public void testUpdateCompanyNotFoundThrows404() {
         // Arrange
         when(companyRepository.findByIdOptional(99L)).thenReturn(Optional.empty());
-        UpdateCompanyRequest request = new UpdateCompanyRequest("NewName", null);
+        UpdateCompanyRequest request = new UpdateCompanyRequest("NewName", null, null, null);
 
         // Act & Assert
         WebApplicationException ex = Assertions.assertThrows(WebApplicationException.class,
@@ -169,8 +169,8 @@ public class CompanyServiceTest {
         CompanyModel model = new CompanyModel();
         model.id = 1L;
         model.name = "OldName";
-        UpdateCompanyRequest request = new UpdateCompanyRequest("TakenName", null);
-        CompanyEntity otherCompany = new CompanyEntity(2L, "TakenName", "555666777", 0, 0.0, 0, 0.0, null, "default.png");
+        UpdateCompanyRequest request = new UpdateCompanyRequest("TakenName", null, null, null);
+        CompanyEntity otherCompany = new CompanyEntity(2L, "TakenName", "555666777", 0, 0.0, 0, 0.0, null, 48.8, 2.3, "default.png");
 
         when(companyRepository.findByIdOptional(1L)).thenReturn(Optional.of(model));
         when(companyRepository.findByName("TakenName")).thenReturn(Optional.of(otherCompany));

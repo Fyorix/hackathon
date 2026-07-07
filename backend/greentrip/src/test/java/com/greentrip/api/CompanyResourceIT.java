@@ -49,7 +49,7 @@ public class CompanyResourceIT {
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testCreateCompanyIntegrationFlow() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("VeloFlex", "111222333", "veloflex.png");
+        CreateCompanyRequest request = new CreateCompanyRequest("VeloFlex", "111222333", "veloflex.png", 48.8566, 2.3522);
 
         // Act
         Long createdId = given()
@@ -76,7 +76,7 @@ public class CompanyResourceIT {
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testCreateCompanyDuplicateNameReturnsConflict() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("EPITA", "999999999", null);
+        CreateCompanyRequest request = new CreateCompanyRequest("EPITA", "999999999", null, null, null);
 
         // Act & Assert
         given()
@@ -92,7 +92,7 @@ public class CompanyResourceIT {
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testCreateCompanyInvalidPayloadReturnsBadRequest() {
         // Arrange
-        CreateCompanyRequest request = new CreateCompanyRequest("", "", null);
+        CreateCompanyRequest request = new CreateCompanyRequest("", "", null, null, null);
 
         // Act & Assert
         given()
@@ -129,7 +129,7 @@ public class CompanyResourceIT {
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testUpdateCompanyIntegrationFlow() {
         // Arrange
-        UpdateCompanyRequest request = new UpdateCompanyRequest("EPITA Renamed", "new-logo.png");
+        UpdateCompanyRequest request = new UpdateCompanyRequest("EPITA Renamed", "new-logo.png", 48.9, 2.4);
 
         // Act
         given()
@@ -151,7 +151,7 @@ public class CompanyResourceIT {
     @Test
     @TestSecurity(user = "admin@takima.fr", roles = {"ADMIN"})
     public void testUpdateCompanyNotFoundReturns404() {
-        UpdateCompanyRequest request = new UpdateCompanyRequest("Ghost", null);
+        UpdateCompanyRequest request = new UpdateCompanyRequest("Ghost", null, null, null);
 
         given()
           .contentType(ContentType.JSON)

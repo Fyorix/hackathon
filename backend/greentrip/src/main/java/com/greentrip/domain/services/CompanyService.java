@@ -107,6 +107,12 @@ public class CompanyService {
         if (request.logoPath() != null) {
             model.logoPath = request.logoPath();
         }
+        if (request.latitude() != null) {
+            model.latitude = request.latitude();
+        }
+        if (request.longitude() != null) {
+            model.longitude = request.longitude();
+        }
         return companyMapper.toEntity(model);
     }
 
