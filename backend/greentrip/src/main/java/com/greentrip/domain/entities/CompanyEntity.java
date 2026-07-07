@@ -5,8 +5,11 @@ import java.time.LocalDateTime;
 public record CompanyEntity(
     Long id,
     String name,
+    String sirenNumber,
     Integer totalEmployees,
     Double totalCo2Saved,
-    String unlockedBadge,
-    LocalDateTime createdAt
+    Integer totalPoints,
+    Double totalKm,
+    LocalDateTime createdAt,
+    String logoPath
 ) {}

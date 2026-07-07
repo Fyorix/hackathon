@@ -11,14 +11,23 @@ public class CompanyModel extends BaseModel {
     @Column(nullable = false, unique = true)
     public String name;
 
+    @Column(name = "siren_number", nullable = false, unique = true)
+    public String sirenNumber;
+
     @Column(name = "total_employees")
     public Integer totalEmployees = 0;
 
     @Column(name = "total_co2_saved")
     public Double totalCo2Saved = 0.0;
 
-    @Column(name = "unlocked_badge")
-    public String unlockedBadge;
+    @Column(name = "total_points")
+    public Integer totalPoints = 0;
+
+    @Column(name = "total_km")
+    public Double totalKm = 0.0;
+
+    @Column(name = "logo_path")
+    public String logoPath = "default.png";
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<UserModel> users = new ArrayList<>();
