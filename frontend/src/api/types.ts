@@ -31,7 +31,7 @@ export interface RegisterRequest {
   name: string
   email: string
   password: string
-  companyId: number
+  companyId?: number
 }
 
 export interface TokenResponse {

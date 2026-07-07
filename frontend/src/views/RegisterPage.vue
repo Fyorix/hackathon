@@ -15,13 +15,19 @@ const error = ref('')
 
 async function submit() {
   error.value = ''
-  if (!name.value || !email.value || !password.value || companyId.value === null) {
-    error.value = 'Tous les champs sont requis'
+  if (!name.value || !email.value || !password.value) {
+    error.value = 'Veuillez remplir tous les champs obligatoires'
     return
   }
   loading.value = true
   try {
-    await UsersService.register({ name: name.value.trim(), email: email.value.trim(), password: password.value, companyId: Number(companyId.value) })
+    const hasCompany = companyId.value !== null && companyId.value !== undefined && String(companyId.value).trim() !== ''
+    await UsersService.register({
+      name: name.value.trim(),
+      email: email.value.trim(),
+      password: password.value,
+      companyId: hasCompany ? Number(companyId.value) : undefined
+    })
     await UsersService.login({ email: email.value.trim(), password: password.value })
     const redirect = (route.query.redirect as string) || '/'
     router.replace(redirect)
@@ -39,15 +45,21 @@ async function submit() {
       <h1 class="text-2xl font-semibold mb-6 text-gray-800">Créer un compte</h1>
       <form @submit.prevent="submit" class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Nom <span class="text-red-500">*</span>
+          </label>
           <input v-model="name" type="text" class="w-full text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="name" />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Email <span class="text-red-500">*</span>
+          </label>
           <input v-model="email" type="email" class="w-full text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="email" />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Mot de passe <span class="text-red-500">*</span>
+          </label>
           <input v-model="password" type="password" class="w-full text-black border-black border rounded px-3 py-2 focus:outline-none focus:ring" autocomplete="new-password" />
         </div>
         <div>
@@ -59,6 +71,9 @@ async function submit() {
           {{ loading ? 'Création...' : "S'inscrire" }}
         </button>
       </form>
+      <div class="text-xs text-gray-500 mt-4 text-center">
+        <span class="text-red-500">*</span> Champs obligatoires
+      </div>
       <div class="text-center text-sm mt-4">
         <router-link class="text-green-700 hover:underline" to="/login">Déjà un compte ? Se connecter</router-link>
       </div>
