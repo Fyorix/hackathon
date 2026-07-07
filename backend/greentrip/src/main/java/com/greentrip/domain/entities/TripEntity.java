@@ -7,7 +7,7 @@ public record TripEntity(
     Double distanceKm,
     Double co2Saved,
     Integer pointsEarned,
-    String type,
+    TransportType type,
     String status,
     Long userId,
     LocalDateTime createdAt

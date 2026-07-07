@@ -28,6 +28,26 @@ public abstract class AbstractBaseRepository<Model, Entity> implements PanacheRe
     }
 
     /**
+     * Retrieves a page of Entity data sorted dynamically.
+     */
+    public List<Entity> findPagedEntities(int page, int size, String sortBy, boolean descending) {
+        Sort sort = descending ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        return findAll(sort)
+                .page(Page.of(page, size))
+                .list()
+                .stream()
+                .map(mapper::toEntity)
+                .toList();
+    }
+
+    /**
+     * Finds an entity by a single field name and value.
+     */
+    public Optional<Entity> findEntityByField(String fieldName, Object value) {
+        return find(fieldName, value).firstResultOptional().map(mapper::toEntity);
+    }
+
+    /**
      * Finds an entity by its ID and maps it to the domain Entity.
      */
     public Optional<Entity> findEntityById(Long id) {

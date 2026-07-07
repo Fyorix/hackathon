@@ -17,9 +17,9 @@ public class CompanyRepository extends AbstractBaseRepository<CompanyModel, Comp
      * @param name The company's name
      * @return An optional containing the company if found
      */
-    public Optional<CompanyModel> findByName(String name) {
+    public Optional<CompanyEntity> findByName(String name) {
         log.debug("Database query: Fetching company by name: {}", name);
-        return find("name", name).firstResultOptional();
+        return findEntityByField("name", name);
     }
 
     /**
@@ -27,8 +27,8 @@ public class CompanyRepository extends AbstractBaseRepository<CompanyModel, Comp
      * @param sirenNumber The company's SIREN number
      * @return An optional containing the company if found
      */
-    public Optional<CompanyModel> findBySirenNumber(String sirenNumber) {
+    public Optional<CompanyEntity> findBySirenNumber(String sirenNumber) {
         log.debug("Database query: Fetching company by SIREN number: {}", sirenNumber);
-        return find("sirenNumber", sirenNumber).firstResultOptional();
+        return findEntityByField("sirenNumber", sirenNumber);
     }
 }

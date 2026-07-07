@@ -1,5 +1,6 @@
 package com.greentrip.domain.dtos.responses;
 
+import com.greentrip.domain.entities.TransportType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public record TripResponse(
     @Schema(description = "Number of carbon points earned", example = "120")
     Integer pointsEarned,
     @Schema(description = "Mode of transportation used", example = "VELO")
-    String type,
+    TransportType type,
     @Schema(description = "Timestamp of registration")
     LocalDateTime createdAt
 ) {}

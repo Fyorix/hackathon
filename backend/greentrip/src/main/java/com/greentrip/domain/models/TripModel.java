@@ -1,5 +1,6 @@
 package com.greentrip.domain.models;
 
+import com.greentrip.domain.entities.TransportType;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,8 +16,9 @@ public class TripModel extends BaseModel {
     @Column(name = "points_earned", nullable = false)
     public Integer pointsEarned;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    public String type;
+    public TransportType type;
 
     @Column(nullable = true)
     public String status;

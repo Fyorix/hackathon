@@ -17,7 +17,7 @@ public class UserRepository extends AbstractBaseRepository<UserModel, UserEntity
      */
     public Optional<UserEntity> findByEmail(String email) {
         log.debug("Database query: Fetching user by email: {}", email);
-        return find("email", email).firstResultOptional().map(mapper::toEntity);
+        return findEntityByField("email", email);
     }
 
     /**
