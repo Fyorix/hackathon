@@ -45,4 +45,17 @@ public class UserRepository extends AbstractBaseRepository<UserModel, UserEntity
                 .map(mapper::toEntity)
                 .toList();
     }
+
+    /**
+     * Finds users in a specific company whose name matches the query, case-insensitive, paginated.
+     */
+    public java.util.List<UserEntity> findPagedUsersByNameQueryAndCompany(Long companyId, String query, int page, int size) {
+        log.debug("Database query: Searching users matching '{}' in company {} (page={}, size={})", query, companyId, page, size);
+        return find("company.id = ?1 and lower(name) like lower(?2)", companyId, "%" + query + "%")
+                .page(page, size)
+                .list()
+                .stream()
+                .map(mapper::toEntity)
+                .toList();
+    }
 }
