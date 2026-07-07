@@ -97,7 +97,7 @@ public class UserService {
         }
 
         log.info("Successfully authenticated user: {}", user.email());
-        return new TokenResponse("mock-jwt-token-for-" + user.email(), "Bearer", 3600L);
+        return new TokenResponse("mock-jwt-token-for-" + user.email(), "Bearer", 86400L);
     }
 
     /**
