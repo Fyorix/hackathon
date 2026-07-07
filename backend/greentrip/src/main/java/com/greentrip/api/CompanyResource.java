@@ -59,7 +59,7 @@ public class CompanyResource {
         log.info("Fetching company statistics for user: {}", email);
         CompanyEntity company = companyService.getCompanyDetails(email);
         CompanyResponse response = companyMapper.toResponse(company);
-        return response != null ? response : new CompanyResponse(3L, "Takima", "123456789", 50, 145.2, 1200, 3500.5, "/images/logos/takima.png");
+        return response != null ? response : new CompanyResponse(3L, "Takima", "123456789", 50, 145.2, 1200, 3500.5, 48.866667, 2.333333, "/images/logos/takima.png");
     }
 
     @GET

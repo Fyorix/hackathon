@@ -26,7 +26,6 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             model.carbonPointsBalance,
             model.totalCo2Saved,
             model.totalKm,
-            model.stravaRefreshToken,
             model.homeLat,
             model.homeLng,
             model.workLat,
@@ -58,6 +57,12 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
         model.carbonPointsBalance = entity.carbonPointsBalance();
         model.totalCo2Saved = entity.totalCo2Saved();
         model.totalKm = entity.totalKm();
+        model.homeLat = entity.homeLat();
+        model.homeLng = entity.homeLng();
+        model.workLat = entity.workLat();
+        model.workLng = entity.workLng();
+        model.workStartTime = entity.workStartTime();
+        model.workEndTime = entity.workEndTime();
         model.stravaAthleteId = entity.stravaAthleteId();
         model.stravaAccessToken = entity.stravaAccessToken();
         model.stravaRefreshToken = entity.stravaRefreshToken();

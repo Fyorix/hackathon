@@ -1,5 +1,10 @@
 package com.greentrip.domain.services;
 
+import java.time.LocalDateTime;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.greentrip.domain.dtos.requests.LoginRequest;
 import com.greentrip.domain.dtos.requests.RegisterRequest;
 import com.greentrip.domain.dtos.requests.UserRequest;
@@ -8,13 +13,11 @@ import com.greentrip.domain.entities.CompanyEntity;
 import com.greentrip.domain.entities.UserEntity;
 import com.greentrip.infra.repositories.CompanyRepository;
 import com.greentrip.infra.repositories.UserRepository;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.WebApplicationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.time.LocalDateTime;
 
 @ApplicationScoped
 public class UserService {
@@ -58,7 +61,6 @@ public class UserService {
                 0,
                 0.0,
                 0.0,
-                null,
                 null,
                 null,
                 null,
@@ -151,7 +153,6 @@ public class UserService {
                 existing.carbonPointsBalance(),
                 existing.totalCo2Saved(),
                 existing.totalKm(),
-                existing.stravaRefreshToken(),
                 existing.homeLat(),
                 existing.homeLng(),
                 existing.workLat(),
@@ -300,7 +301,6 @@ public class UserService {
                 user.carbonPointsBalance(),
                 user.totalCo2Saved(),
                 user.totalKm(),
-                user.stravaRefreshToken(),
                 request.homeLat(),
                 request.homeLng(),
                 request.workLat(),
@@ -308,7 +308,11 @@ public class UserService {
                 request.workStartTime(),
                 request.workEndTime(),
                 company.id(),
-                user.createdAt()
+                user.createdAt(),
+                user.stravaAthleteId(),
+                user.stravaAccessToken(),
+                user.stravaRefreshToken(),
+                user.stravaTokenExpiresAt()
         );
         
         return userRepository.update(updatedUser);
