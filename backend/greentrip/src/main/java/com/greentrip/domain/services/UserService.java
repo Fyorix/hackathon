@@ -63,8 +63,6 @@ public class UserService {
                 null,
                 null,
                 null,
-                null,
-                null,
                 company != null ? company.id() : null,
                 LocalDateTime.now()
         );
@@ -148,8 +146,6 @@ public class UserService {
                 existing.totalCo2Saved(),
                 existing.totalKm(),
                 existing.stravaRefreshToken(),
-                existing.homeLat(),
-                existing.homeLng(),
                 existing.workLat(),
                 existing.workLng(),
                 existing.workStartTime(),
@@ -293,8 +289,6 @@ public class UserService {
                 user.totalCo2Saved(),
                 user.totalKm(),
                 user.stravaRefreshToken(),
-                request.homeLat(),
-                request.homeLng(),
                 request.workLat(),
                 request.workLng(),
                 request.workStartTime(),

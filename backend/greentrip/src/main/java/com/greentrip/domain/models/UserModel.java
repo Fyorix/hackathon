@@ -33,12 +33,6 @@ public class UserModel extends BaseModel {
     @Column(name = "strava_refresh_token")
     public String stravaRefreshToken;
 
-    @Column(name = "home_lat")
-    public Double homeLat;
-
-    @Column(name = "home_lng")
-    public Double homeLng;
-
     @Column(name = "work_lat")
     public Double workLat;
 
