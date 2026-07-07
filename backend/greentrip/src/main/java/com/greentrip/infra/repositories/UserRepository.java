@@ -1,6 +1,7 @@
 package com.greentrip.infra.repositories;
 
 import com.greentrip.domain.entities.UserEntity;
+import com.greentrip.domain.entities.UserSortField;
 import com.greentrip.domain.models.UserModel;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class UserRepository extends AbstractBaseRepository<UserModel, UserEntity
     /**
      * Retrieves the sorted and paged leaderboard of users for a given company.
      */
-    public java.util.List<UserEntity> findPagedLeaderboardByCompany(Long companyId, int page, int size, com.greentrip.domain.entities.UserSortField sortBy, boolean descending) {
+    public java.util.List<UserEntity> findPagedLeaderboardByCompany(Long companyId, int page, int size, UserSortField sortBy, boolean descending) {
         String sortField = sortBy.getFieldName();
         String direction = descending ? "desc" : "asc";
         log.debug("Database query: Fetching company {} users leaderboard (page={}, size={}, sort={}, desc={})", 
