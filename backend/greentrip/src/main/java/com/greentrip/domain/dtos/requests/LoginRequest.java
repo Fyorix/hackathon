@@ -7,10 +7,10 @@ import jakarta.validation.constraints.*;
 public record LoginRequest(
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Invalid email format")
-    @Schema(description = "User's email address", example = "alex@takima.fr")
+    @Schema(description = "User's email address", examples = "alex@takima.fr")
     String email,
 
     @NotBlank(message = "Password cannot be empty")
-    @Schema(description = "User's secure password", example = "supersecret")
+    @Schema(description = "User's secure password", examples = "supersecret")
     String password
 ) {}

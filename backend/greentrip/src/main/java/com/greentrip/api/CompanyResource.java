@@ -115,13 +115,13 @@ public class CompanyResource {
                description = "Retrieves the sorted ranking of all participating companies according to their RSE score")
     @APIResponse(responseCode = "200", description = "Leaderboard successfully retrieved")
     public List<CompanyResponse> getLeaderboard(
-            @Parameter(description = "Page index", example = "0")
+            @Parameter(description = "Page index", examples = "0")
             @QueryParam("page") @DefaultValue("0") int page,
-            @Parameter(description = "Page size", example = "10")
+            @Parameter(description = "Page size", examples = "10")
             @QueryParam("size") @DefaultValue("10") int size,
-            @Parameter(description = "Sort field", example = "totalCo2Saved")
+            @Parameter(description = "Sort field", examples = "totalCo2Saved")
             @QueryParam("sortBy") @DefaultValue("totalCo2Saved") String sortBy,
-            @Parameter(description = "Sort descending if true", example = "true")
+            @Parameter(description = "Sort descending if true", examples = "true")
             @QueryParam("desc") @DefaultValue("true") boolean desc) {
         
         log.info("Retrieving general company leaderboard (page: {}, size: {}, sortBy: {}, desc: {})", page, size, sortBy, desc);
