@@ -83,9 +83,8 @@ public class CompanyService {
         if (companyRepository.findBySirenNumber(request.sirenNumber()).isPresent()) {
             throw new WebApplicationException("SIREN number already in use", Response.Status.CONFLICT);
         }
-        CompanyModel model = companyMapper.toModel(companyMapper.toEntity(request));
-        companyRepository.persist(model);
-        return companyMapper.toEntity(model);
+        CompanyEntity companyEntity = companyMapper.toEntity(request);
+        return companyRepository.create(companyEntity);
     }
 
     /**
@@ -97,8 +96,8 @@ public class CompanyService {
         CompanyModel model = companyRepository.findByIdOptional(id)
                 .orElseThrow(() -> new WebApplicationException("Company not found", Response.Status.NOT_FOUND));
 
-        Optional<CompanyModel> existing = companyRepository.findByName(request.companyName());
-        if (existing.isPresent() && !existing.get().id.equals(id)) {
+        Optional<CompanyEntity> existing = companyRepository.findByName(request.companyName());
+        if (existing.isPresent() && !existing.get().id().equals(id)) {
             throw new WebApplicationException("Company name already in use", Response.Status.CONFLICT);
         }
 
