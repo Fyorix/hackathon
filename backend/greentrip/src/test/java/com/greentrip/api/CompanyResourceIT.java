@@ -222,4 +222,40 @@ public class CompanyResourceIT {
         .then()
           .statusCode(404);
     }
+
+    @Test
+    public void testSearchCompaniesSuccess() {
+        given()
+          .queryParam("query", "deca")
+          .queryParam("page", 0)
+          .queryParam("size", 5)
+        .when()
+          .get("/api/companies/search")
+        .then()
+          .statusCode(200)
+          .body("size()", is(1))
+          .body("[0].name", is("Decathlon"));
+    }
+
+    @Test
+    public void testSearchCompaniesQueryTooShortReturns400() {
+        given()
+          .queryParam("query", "dec")
+        .when()
+          .get("/api/companies/search")
+        .then()
+          .statusCode(400);
+    }
+
+    @Test
+    public void testSearchCompaniesCaseInsensitive() {
+        given()
+          .queryParam("query", "TAKI")
+        .when()
+          .get("/api/companies/search")
+        .then()
+          .statusCode(200)
+          .body("size()", is(1))
+          .body("[0].name", is("Takima"));
+    }
 }
