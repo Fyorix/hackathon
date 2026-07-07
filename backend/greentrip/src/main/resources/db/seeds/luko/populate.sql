@@ -1,6 +1,6 @@
 -- Seed data for Luko
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, logo_path, created_at)
-VALUES (19, 'Luko', '824141678', 15, 310.0, 15500, 1550.0, 'luko.png', NOW())
+VALUES (19, 'Luko', '824141678', 15, 346.29, 19368, 1972.1, 'luko.png', NOW())
 ON CONFLICT (id) DO UPDATE SET
     name = EXCLUDED.name,
     siren_number = EXCLUDED.siren_number,
@@ -12,7 +12,7 @@ ON CONFLICT (id) DO UPDATE SET
 
 -- Users for Luko
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
-VALUES (190, 'Raphael', 'raphael@luko.eu', 'password123', 'USER', 9500, 190.0, 19, NOW())
+VALUES (351, 'Ines Fontaine', 'ines.fontaine351@luko.eu', 'password123', 'ADMIN', 4525, 85.05, 19, NOW())
 ON CONFLICT (id) DO UPDATE SET
     name = EXCLUDED.name,
     email = EXCLUDED.email,
@@ -20,7 +20,39 @@ ON CONFLICT (id) DO UPDATE SET
     total_co2_saved = EXCLUDED.total_co2_saved;
 
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
-VALUES (191, 'Zoe', 'zoe@luko.eu', 'password123', 'USER', 6000, 120.0, 19, NOW())
+VALUES (352, 'Thomas Roussel', 'thomas.roussel352@luko.eu', 'password123', 'USER', 3498, 75.55, 19, NOW())
+ON CONFLICT (id) DO UPDATE SET
+    name = EXCLUDED.name,
+    email = EXCLUDED.email,
+    carbon_points_balance = EXCLUDED.carbon_points_balance,
+    total_co2_saved = EXCLUDED.total_co2_saved;
+
+INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
+VALUES (353, 'Clara Leroy', 'clara.leroy353@luko.eu', 'password123', 'USER', 2391, 30.53, 19, NOW())
+ON CONFLICT (id) DO UPDATE SET
+    name = EXCLUDED.name,
+    email = EXCLUDED.email,
+    carbon_points_balance = EXCLUDED.carbon_points_balance,
+    total_co2_saved = EXCLUDED.total_co2_saved;
+
+INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
+VALUES (354, 'Nicolas Roux', 'nicolas.roux354@luko.eu', 'password123', 'USER', 2034, 30.18, 19, NOW())
+ON CONFLICT (id) DO UPDATE SET
+    name = EXCLUDED.name,
+    email = EXCLUDED.email,
+    carbon_points_balance = EXCLUDED.carbon_points_balance,
+    total_co2_saved = EXCLUDED.total_co2_saved;
+
+INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
+VALUES (355, 'Ines Michel', 'ines.michel355@luko.eu', 'password123', 'USER', 4560, 97.65, 19, NOW())
+ON CONFLICT (id) DO UPDATE SET
+    name = EXCLUDED.name,
+    email = EXCLUDED.email,
+    carbon_points_balance = EXCLUDED.carbon_points_balance,
+    total_co2_saved = EXCLUDED.total_co2_saved;
+
+INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, company_id, created_at)
+VALUES (356, 'Marie Lefebvre', 'marie.lefebvre356@luko.eu', 'password123', 'USER', 2360, 27.33, 19, NOW())
 ON CONFLICT (id) DO UPDATE SET
     name = EXCLUDED.name,
     email = EXCLUDED.email,
