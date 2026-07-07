@@ -60,10 +60,10 @@ public class CompanyService {
     /**
      * Gets the global leaderboard of companies.
      */
-    public List<CompanyEntity> getLeaderboard(int page, int size, String sortBy, boolean descending) {
+    public List<CompanyEntity> getLeaderboard(int page, int size, com.greentrip.domain.entities.CompanySortField sortBy, boolean descending) {
         log.info("Fetching company leaderboard (page: {}, size: {})", page, size);
         log.debug("Leaderboard sorting parameters: sortBy={}, descending={}", sortBy, descending);
-        return companyRepository.findPaged(page, size, sortBy, descending).stream()
+        return companyRepository.findPaged(page, size, sortBy.getFieldName(), descending).stream()
                 .map(companyMapper::toEntity)
                 .toList();
     }
@@ -123,7 +123,7 @@ public class CompanyService {
     /**
      * Gets sorted leaderboard of users belonging to a company.
      */
-    public List<UserEntity> getCompanyUserLeaderboard(Long companyId, int page, int size, String sortBy, boolean descending) {
+    public List<UserEntity> getCompanyUserLeaderboard(Long companyId, int page, int size, com.greentrip.domain.entities.UserSortField sortBy, boolean descending) {
         log.info("Getting leaderboard of users for company id: {}", companyId);
         // Verify if company exists
         companyRepository.findByIdOptional(companyId)

@@ -5,7 +5,9 @@ import com.greentrip.domain.dtos.requests.UpdateCompanyRequest;
 import com.greentrip.domain.dtos.responses.CompanyResponse;
 import com.greentrip.domain.dtos.responses.UserResponse;
 import com.greentrip.domain.entities.CompanyEntity;
+import com.greentrip.domain.entities.CompanySortField;
 import com.greentrip.domain.entities.UserEntity;
+import com.greentrip.domain.entities.UserSortField;
 import com.greentrip.domain.mappers.CompanyMapper;
 import com.greentrip.domain.mappers.UserMapper;
 import com.greentrip.domain.services.CompanyService;
@@ -125,8 +127,8 @@ public class CompanyResource {
             @QueryParam("page") @DefaultValue("0") int page,
             @Parameter(description = "Page size", example = "10")
             @QueryParam("size") @DefaultValue("10") int size,
-            @Parameter(description = "Sort field", example = "totalCo2Saved")
-            @QueryParam("sortBy") @DefaultValue("totalCo2Saved") String sortBy,
+            @Parameter(description = "Sort field", example = "CO2")
+            @QueryParam("sortBy") @DefaultValue("CO2") CompanySortField sortBy,
             @Parameter(description = "Sort descending if true", example = "true")
             @QueryParam("desc") @DefaultValue("true") boolean desc) {
         
@@ -148,8 +150,8 @@ public class CompanyResource {
             @QueryParam("page") @DefaultValue("0") int page,
             @Parameter(description = "Page size", example = "10")
             @QueryParam("size") @DefaultValue("10") int size,
-            @Parameter(description = "Sort field (points, co2, km)", example = "co2")
-            @QueryParam("sortBy") @DefaultValue("co2") String sortBy,
+            @Parameter(description = "Sort field (POINTS, CO2, KM)", example = "CO2")
+            @QueryParam("sortBy") @DefaultValue("CO2") UserSortField sortBy,
             @Parameter(description = "Sort descending if true", example = "true")
             @QueryParam("desc") @DefaultValue("true") boolean desc) {
         
