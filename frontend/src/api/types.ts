@@ -8,6 +8,8 @@ export interface CompanyResponse {
   totalCo2Saved?: number
   totalPoints?: number
   totalKm?: number
+  latitude?: number
+  longitude?: number
   logoPath?: string
 }
 
@@ -15,11 +17,15 @@ export interface CreateCompanyRequest {
   companyName: string
   sirenNumber: string
   logoPath?: string
+  latitude?: number
+  longitude?: number
 }
 
 export interface UpdateCompanyRequest {
   companyName: string
   logoPath?: string
+  latitude?: number
+  longitude?: number
 }
 
 export interface LoginRequest {
@@ -68,6 +74,17 @@ export interface UserResponse {
   role?: string
   carbonPointsBalance?: number
   totalCo2Saved?: number
+  totalKm?: number
+}
+
+export interface JoinCompanyRequest {
+  companyId: number
+  homeLat?: number
+  homeLng?: number
+  workLat?: number
+  workLng?: number
+  workStartTime?: string // LocalTime
+  workEndTime?: string // LocalTime
 }
 
 export interface PaginationQuery {
