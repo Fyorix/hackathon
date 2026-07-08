@@ -17,6 +17,7 @@ const companySize = 10
 const companySortBy = ref<'CO2' | 'POINTS' | 'KM' | 'EMPLOYEES'>('CO2')
 const companyDesc = ref(true)
 const companyHasMore = ref(true)
+const cachedCompanyNextPage = ref<CompanyResponse[] | null>(null)
 
 // Users leaderboard state
 const users = ref<UserResponse[]>([])
@@ -26,6 +27,7 @@ const userSize = 10
 const userSortBy = ref<'CO2' | 'POINTS' | 'KM'>('CO2')
 const userDesc = ref(true)
 const userHasMore = ref(true)
+const cachedUserNextPage = ref<UserResponse[] | null>(null)
 
 // Track logos that failed to load
 const failedLogos = ref<Record<number, boolean>>({})
@@ -48,46 +50,127 @@ function handleImageError(companyId?: number) {
   }
 }
 
+// Prefetch next page of companies to see if more exist
+function prefetchNextCompanies() {
+  const nextPage = companyPage.value + 1
+  CompaniesService.leaderboard({
+    page: nextPage,
+    size: companySize,
+    sortBy: companySortBy.value,
+    desc: companyDesc.value
+  }).then(nextData => {
+    if (!nextData || nextData.length === 0) {
+      companyHasMore.value = false
+    } else {
+      cachedCompanyNextPage.value = nextData
+    }
+  }).catch(err => {
+    console.warn('Prefetch error:', err)
+  })
+}
+
 // Fetch companies leaderboard data
 async function fetchCompanyLeaderboard(loadMore = false) {
   if (!loadMore) {
     companyPage.value = 0
     companies.value = []
     companyHasMore.value = true
-  }
-  
-  loading.value = true
-  errorMsg.value = ''
-  
-  try {
-    const data = await CompaniesService.leaderboard({
-      page: companyPage.value,
-      size: companySize,
-      sortBy: companySortBy.value,
-      desc: companyDesc.value
-    })
+    cachedCompanyNextPage.value = null
     
-    if (data && data.length > 0) {
-      if (loadMore) {
-        const currentIds = new Set(companies.value.map(c => c.id))
-        const uniqueNew = data.filter(c => !currentIds.has(c.id))
-        companies.value.push(...uniqueNew)
-      } else {
-        companies.value = data
-      }
+    loading.value = true
+    errorMsg.value = ''
+    
+    try {
+      const data = await CompaniesService.leaderboard({
+        page: 0,
+        size: companySize,
+        sortBy: companySortBy.value,
+        desc: companyDesc.value
+      })
       
-      if (data.length < companySize) {
+      if (data && data.length > 0) {
+        companies.value = data
+        if (data.length < companySize) {
+          companyHasMore.value = false
+        } else {
+          prefetchNextCompanies()
+        }
+      } else {
         companyHasMore.value = false
       }
-    } else {
-      companyHasMore.value = false
+    } catch (err: any) {
+      console.error('Error fetching company leaderboard:', err)
+      errorMsg.value = 'Impossible de charger le classement des entreprises.'
+    } finally {
+      loading.value = false
     }
-  } catch (err: any) {
-    console.error('Error fetching company leaderboard:', err)
-    errorMsg.value = 'Impossible de charger le classement des entreprises.'
-  } finally {
-    loading.value = false
+  } else {
+    // If we have cached next page, load it instantly
+    if (cachedCompanyNextPage.value) {
+      const currentIds = new Set(companies.value.map(c => c.id))
+      const uniqueNew = cachedCompanyNextPage.value.filter(c => !currentIds.has(c.id))
+      companies.value.push(...uniqueNew)
+      companyPage.value += 1
+      
+      const lastFetchLength = cachedCompanyNextPage.value.length
+      cachedCompanyNextPage.value = null
+      
+      if (lastFetchLength < companySize) {
+        companyHasMore.value = false
+      } else {
+        prefetchNextCompanies()
+      }
+    } else {
+      // Fallback in case cache is empty
+      loading.value = true
+      try {
+        companyPage.value += 1
+        const data = await CompaniesService.leaderboard({
+          page: companyPage.value,
+          size: companySize,
+          sortBy: companySortBy.value,
+          desc: companyDesc.value
+        })
+        if (data && data.length > 0) {
+          const currentIds = new Set(companies.value.map(c => c.id))
+          const uniqueNew = data.filter(c => !currentIds.has(c.id))
+          companies.value.push(...uniqueNew)
+          if (data.length < companySize) {
+            companyHasMore.value = false
+          } else {
+            prefetchNextCompanies()
+          }
+        } else {
+          companyHasMore.value = false
+        }
+      } catch (err) {
+        console.error('Error fetching next company page:', err)
+        errorMsg.value = 'Impossible de charger plus d\'entreprises.'
+      } finally {
+        loading.value = false
+      }
+    }
   }
+}
+
+// Prefetch next page of users to see if more exist
+function prefetchNextUsers() {
+  if (!selectedCompany.value?.id) return
+  const nextPage = userPage.value + 1
+  CompaniesService.userLeaderboard(selectedCompany.value.id, {
+    page: nextPage,
+    size: userSize,
+    sortBy: userSortBy.value,
+    desc: userDesc.value
+  }).then(nextData => {
+    if (!nextData || nextData.length === 0) {
+      userHasMore.value = false
+    } else {
+      cachedUserNextPage.value = nextData
+    }
+  }).catch(err => {
+    console.warn('Prefetch error:', err)
+  })
 }
 
 // Fetch users leaderboard for a specific company
@@ -98,39 +181,80 @@ async function fetchUserLeaderboard(loadMore = false) {
     userPage.value = 0
     users.value = []
     userHasMore.value = true
-  }
-  
-  loading.value = true
-  errorMsg.value = ''
-  
-  try {
-    const data = await CompaniesService.userLeaderboard(selectedCompany.value.id, {
-      page: userPage.value,
-      size: userSize,
-      sortBy: userSortBy.value,
-      desc: userDesc.value
-    })
+    cachedUserNextPage.value = null
     
-    if (data && data.length > 0) {
-      if (loadMore) {
-        const currentIds = new Set(users.value.map(u => u.id))
-        const uniqueNew = data.filter(u => !currentIds.has(u.id))
-        users.value.push(...uniqueNew)
-      } else {
-        users.value = data
-      }
+    loading.value = true
+    errorMsg.value = ''
+    
+    try {
+      const data = await CompaniesService.userLeaderboard(selectedCompany.value.id, {
+        page: 0,
+        size: userSize,
+        sortBy: userSortBy.value,
+        desc: userDesc.value
+      })
       
-      if (data.length < userSize) {
+      if (data && data.length > 0) {
+        users.value = data
+        if (data.length < userSize) {
+          userHasMore.value = false
+        } else {
+          prefetchNextUsers()
+        }
+      } else {
         userHasMore.value = false
       }
-    } else {
-      userHasMore.value = false
+    } catch (err: any) {
+      console.error('Error fetching user leaderboard:', err)
+      errorMsg.value = `Impossible de charger le classement des employés de ${selectedCompany.value?.name}.`
+    } finally {
+      loading.value = false
     }
-  } catch (err: any) {
-    console.error('Error fetching user leaderboard:', err)
-    errorMsg.value = `Impossible de charger le classement des employés de ${selectedCompany.value?.name}.`
-  } finally {
-    loading.value = false
+  } else {
+    // If we have cached next page, load it instantly
+    if (cachedUserNextPage.value) {
+      const currentIds = new Set(users.value.map(u => u.id))
+      const uniqueNew = cachedUserNextPage.value.filter(u => !currentIds.has(u.id))
+      users.value.push(...uniqueNew)
+      userPage.value += 1
+      
+      const lastFetchLength = cachedUserNextPage.value.length
+      cachedUserNextPage.value = null
+      
+      if (lastFetchLength < userSize) {
+        userHasMore.value = false
+      } else {
+        prefetchNextUsers()
+      }
+    } else {
+      loading.value = true
+      try {
+        userPage.value += 1
+        const data = await CompaniesService.userLeaderboard(selectedCompany.value.id, {
+          page: userPage.value,
+          size: userSize,
+          sortBy: userSortBy.value,
+          desc: userDesc.value
+        })
+        if (data && data.length > 0) {
+          const currentIds = new Set(users.value.map(u => u.id))
+          const uniqueNew = data.filter(u => !currentIds.has(u.id))
+          users.value.push(...uniqueNew)
+          if (data.length < userSize) {
+            userHasMore.value = false
+          } else {
+            prefetchNextUsers()
+          }
+        } else {
+          userHasMore.value = false
+        }
+      } catch (err) {
+        console.error('Error fetching next user page:', err)
+        errorMsg.value = 'Impossible de charger plus d\'employés.'
+      } finally {
+        loading.value = false
+      }
+    }
   }
 }
 
@@ -187,10 +311,8 @@ function changeSort(field: string) {
 function loadMore() {
   if (loading.value) return
   if (selectedCompany.value) {
-    userPage.value += 1
     fetchUserLeaderboard(true)
   } else {
-    companyPage.value += 1
     fetchCompanyLeaderboard(true)
   }
 }
