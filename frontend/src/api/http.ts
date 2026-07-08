@@ -42,7 +42,12 @@ async function request<T>(method: string, path: string, options?: { query?: Quer
   const url = `${baseUrl}${path}${buildQuery(options?.query)}`
   const headers: Record<string, string> = { 'Accept': 'application/json', ...(options?.headers || {}) }
   if (options?.body !== undefined) headers['Content-Type'] = 'application/json'
-  if (token) headers['Authorization'] = `Bearer ${token}`
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`
+    if (token.startsWith('mock-jwt-token-for-')) {
+      headers['X-User-Email'] = token.substring('mock-jwt-token-for-'.length())
+    }
+  }
   const res = await fetch(url, { method, headers, body: options?.body !== undefined ? JSON.stringify(options.body) : undefined })
   if (res.status === 204) return undefined as unknown as T
   const text = await res.text()

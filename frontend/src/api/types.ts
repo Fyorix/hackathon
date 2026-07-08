@@ -91,3 +91,30 @@ export interface PaginationQuery {
   size?: number
   sortBy?: string
 }
+
+export interface StravaAuthUrlResponse {
+  url: string
+}
+
+export interface StravaCommuteCandidateResponse {
+  stravaActivityId: number
+  name: string
+  distanceKm: number
+  startLat: number
+  startLng: number
+  endLat: number
+  endLng: number
+  startDate: string
+  type: string
+}
+
+export interface StravaImportRequest {
+  stravaActivityIds: number[]
+}
+
+export interface StravaImportResponse {
+  importedCount: number
+  skippedCount: number
+  importedActivityIds: number[]
+  skippedActivityIds: number[]
+}

@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { UsersService, CompaniesService } from "../api";
+import { UsersService, CompaniesService, StravaService } from "../api";
 import type { CompanyResponse, UserResponse } from "../api/types";
 
 const loading = ref(false);
 const user = ref<UserResponse | null>(null);
 const companies = ref<CompanyResponse[]>([]);
 const currentCompany = ref<CompanyResponse | null>(null);
+
+// Strava State
+const isStravaLinked = ref(false);
+const loadingStrava = ref(false);
 
 // Form fields
 const selectedCompanyId = ref<number | null>(null);
@@ -19,6 +23,39 @@ const isEditing = ref(false);
 const errorMsg = ref("");
 const successMsg = ref("");
 
+async function checkStravaStatus() {
+  try {
+    await StravaService.getCommuteCandidates();
+    isStravaLinked.value = true;
+  } catch (err: any) {
+    const status = err.status;
+    if (status === 409) {
+      isStravaLinked.value = false;
+    } else if (status === 400) {
+      // 400 (location missing) means it is connected but work location isn't set yet.
+      isStravaLinked.value = true;
+    } else {
+      isStravaLinked.value = false;
+    }
+  }
+}
+
+async function connectStrava() {
+  loadingStrava.value = true;
+  errorMsg.value = "";
+  try {
+    const res = await StravaService.getAuthUrl();
+    if (res?.url) {
+      window.location.href = res.url;
+    }
+  } catch (err) {
+    console.error("Error getting Strava auth URL:", err);
+    errorMsg.value = "Impossible de récupérer l'URL d'authentification Strava.";
+  } finally {
+    loadingStrava.value = false;
+  }
+}
+
 async function loadData() {
   loading.value = true;
   errorMsg.value = "";
@@ -26,6 +63,9 @@ async function loadData() {
     // 1. Fetch current user info
     const me = await UsersService.me.get();
     user.value = me;
+
+    // 2. Check Strava connection status
+    await checkStravaStatus();
 
     // 2. Fetch all companies for the select dropdown
     const companiesList = await CompaniesService.leaderboard({ page: 0, size: 100 });
@@ -43,9 +83,9 @@ async function loadData() {
     } else {
       isEditing.value = true;
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error("Error loading profile data:", err);
-    errorMsg.value = "Impossible de charger les données du profil.";
+    errorMsg.value = "Impossible de charger les données du profil. Détail: " + (err.message || err);
   } finally {
     loading.value = false;
   }
@@ -333,6 +373,53 @@ onMounted(() => {
               </button>
             </div>
           </form>
+        </div>
+
+        <!-- Strava Integration Card -->
+        <div class="rounded-2xl bg-white p-8 shadow space-y-6">
+          <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+            <h3 class="text-xl font-bold text-[var(--color-primblue)] flex items-center gap-2">
+              <span class="text-2xl">🟠</span> Intégration Strava
+            </h3>
+            <span 
+              v-if="isStravaLinked" 
+              class="px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-[var(--color-primgreen)] border border-green-200"
+            >
+              Compte connecté
+            </span>
+            <span 
+              v-else 
+              class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200"
+            >
+              Non connecté
+            </span>
+          </div>
+
+          <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+            <div class="space-y-2 text-sm text-slate-600 max-w-lg">
+              <p>
+                Liez votre compte Strava pour synchroniser automatiquement vos trajets domicile-travail éligibles.
+              </p>
+              <p class="text-xs text-slate-400">
+                Seules les activités démarrant ou se terminant à moins de 500m de votre bureau seront éligibles à la conversion en points carbone.
+              </p>
+            </div>
+
+            <div>
+              <button 
+                v-if="!isStravaLinked"
+                @click="connectStrava"
+                :disabled="loadingStrava"
+                class="px-6 py-3 bg-[#FC5200] hover:bg-[#e04900] text-white font-bold rounded-xl shadow-md transition duration-200 flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                <span v-if="loadingStrava" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
+                <span v-else>🟠</span> Connecter mon compte Strava
+              </button>
+              <div v-else class="text-sm font-semibold text-slate-700 flex items-center gap-1.5 bg-green-50/50 p-3 rounded-xl border border-green-100">
+                <span>Liaison active avec Strava ✅</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
