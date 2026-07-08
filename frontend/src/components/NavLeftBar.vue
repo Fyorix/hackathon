@@ -134,4 +134,35 @@ const logout = () => {
   border-radius: 50%;
   object-fit: cover;
 }
+
+@media (max-width: 767px) {
+  .floating-nav {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0;
+    padding: 8px 6px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.15);
+  }
+
+  .logo-bubble {
+    display: none;
+  }
+
+  .bubble-label {
+    display: none;
+  }
+
+  .bubble-circle {
+    width: 46px;
+    height: 46px;
+    font-size: 1.15rem;
+  }
+}
 </style>

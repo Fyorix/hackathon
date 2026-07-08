@@ -175,7 +175,7 @@ onMounted(() => {
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primblue)]"></div>
       </div>
 
-      <div v-else class="space-y-8">
+      <div v-else class="space-y-10">
         <!-- Profile Overview Card -->
         <div class="rounded-2xl bg-white p-8 shadow relative overflow-hidden">
           <div class="absolute right-0 top-0 w-32 h-32 bg-[var(--color-primgreen)]/5 rounded-full blur-2xl"></div>

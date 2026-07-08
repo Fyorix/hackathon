@@ -117,7 +117,7 @@ onMounted(() => {
 
 <template>
   <div class="flex justify-center p-6 md:p-10 text-slate-800">
-    <div class="w-full max-w-xl rounded-2xl bg-white p-8 shadow-lg space-y-6">
+    <div class="w-full max-w-xl rounded-2xl bg-white p-8 shadow-lg space-y-8">
       <h1 class="text-3xl font-extrabold text-[var(--color-primblue)]">
         Déclarer un trajet
       </h1>

@@ -7,7 +7,7 @@ import NavLeftBar from './components/NavLeftBar.vue'
     <NavLeftBar v-if="$route.path !== '/login' && $route.path !== '/register'" />
     <main
       class="flex-1 overflow-auto"
-      :class="{ 'pl-24 md:pl-28': $route.path !== '/login' && $route.path !== '/register' }"
+      :class="{ 'pb-24 md:pb-0 md:pl-28': $route.path !== '/login' && $route.path !== '/register' }"
     >
       <router-view />
     </main>
