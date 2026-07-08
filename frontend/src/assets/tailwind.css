@@ -2,12 +2,12 @@
 
 :root {
     --color-primblue: #064067;
-    --color-primgreen: #3cb076;
+    --color-primgreen: #1b7a43;
     --color-suppblack: #000000;
     --color-suppwhite: #ffffff;
     --color-suppblue: #52c0d6;
-    --color-suppgreen: #7cd38c;
-    --color-suppgreenop20: rgba(124, 211, 140, 0.2);
+    --color-suppgreen: #3ca364;
+    --color-suppgreenop20: rgba(27, 122, 67, 0.2);
 
     --navbar-height: 80px;
     --navbarSites-height: 36px;

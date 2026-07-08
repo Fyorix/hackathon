@@ -45,7 +45,7 @@ async function submit() {
         </div>
         <div v-if="error" class="text-red-600 text-sm">{{ error }}</div>
         <div class="pt-6">
-          <button type="submit" :disabled="loading" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:opacity-50">
+          <button type="submit" :disabled="loading" class="w-full bg-[var(--color-primgreen)] text-white py-2 rounded hover:opacity-90 disabled:opacity-50">
             {{ loading ? 'Connexion...' : 'Se connecter' }}
           </button>
         </div>
