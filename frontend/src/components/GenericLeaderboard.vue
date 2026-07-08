@@ -98,7 +98,7 @@ const listItems = computed(() => {
             class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 cursor-pointer"
             :class="sortBy === 'CO2' ? 'bg-white text-[var(--color-primblue)] shadow-sm' : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-emerald-500">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-[var(--color-primgreen)]">
               <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.39.4.08.56-.17.56-.38v-1.34c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.65.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .22.15.47.57.38C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" />
             </svg>
             CO₂ évité
@@ -357,7 +357,7 @@ const listItems = computed(() => {
 
               <!-- Total CO2 -->
               <td class="py-4 px-6 text-right">
-                <span class="inline-flex items-center gap-1 text-sm font-extrabold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">
+                <span class="inline-flex items-center gap-1 text-sm font-extrabold text-[var(--color-primgreen)] bg-[var(--color-primgreen)]/10 px-2.5 py-1 rounded-lg">
                   🌿 {{ (item.totalCo2Saved || 0).toLocaleString('fr-FR', { maximumFractionDigits: 1 }) }} kg
                 </span>
               </td>

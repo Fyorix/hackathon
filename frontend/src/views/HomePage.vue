@@ -59,7 +59,7 @@ onMounted(() => {
       <div class="rounded-2xl bg-white p-8 shadow">
         <p class="text-gray-500">🌍 CO₂ évité</p>
 
-        <p class="mt-4 text-5xl font-bold text-green-600">
+        <p class="mt-4 text-5xl font-bold text-[var(--color-primgreen)]">
           {{ co2Saved }}
         </p>
 
