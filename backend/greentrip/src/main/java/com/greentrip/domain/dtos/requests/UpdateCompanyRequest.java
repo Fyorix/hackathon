@@ -10,5 +10,11 @@ public record UpdateCompanyRequest(
     String companyName,
 
     @Schema(description = "Path to the company's logo image", examples = {"/images/logos/takima.png"})
-    String logoPath
+    String logoPath,
+
+    @Schema(description = "Latitude of the company office", examples = {"48.8566"})
+    Double latitude,
+
+    @Schema(description = "Longitude of the company office", examples = {"2.3522"})
+    Double longitude
 ) {}

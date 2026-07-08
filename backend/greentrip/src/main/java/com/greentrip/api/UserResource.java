@@ -3,6 +3,7 @@ package com.greentrip.api;
 import com.greentrip.domain.dtos.requests.LoginRequest;
 import com.greentrip.domain.dtos.requests.RegisterRequest;
 import com.greentrip.domain.dtos.requests.UserRequest;
+import com.greentrip.domain.dtos.requests.JoinCompanyRequest;
 import com.greentrip.domain.dtos.responses.TokenResponse;
 import com.greentrip.domain.dtos.responses.UserResponse;
 import com.greentrip.domain.entities.UserEntity;
@@ -76,7 +77,7 @@ public class UserResource {
         log.info("Retrieving profile for authenticated user: {}", email);
         UserEntity user = userService.getProfile(email);
         UserResponse response = userMapper.toResponse(user);
-        return response != null ? response : new UserResponse(1L, "Alex", email, "USER", 450, 9.2);
+        return response != null ? response : new UserResponse(1L, "Alex", email, "USER", 450, 9.2, 45.0);
     }
 
     @PUT
@@ -90,6 +91,21 @@ public class UserResource {
         log.info("Updating profile details for user: {}", email);
         userService.updateProfile(email, request);
         return Response.ok().build();
+    }
+
+    @POST
+    @Path("/join-company")
+    @Authenticated
+    @Operation(summary = "Join a company and set commute preferences",
+               description = "Links the authenticated user to a company and updates their work location and schedules.")
+    @APIResponse(responseCode = "200", description = "Successfully joined the company")
+    @APIResponse(responseCode = "400", description = "Invalid request payload or company not found")
+    @APIResponse(responseCode = "401", description = "Not authenticated")
+    public UserResponse joinCompany(@Context SecurityContext sec, @Valid JoinCompanyRequest request) {
+        String email = sec.getUserPrincipal().getName();
+        log.info("User {} is joining company ID {}", email, request.companyId());
+        UserEntity updated = userService.joinCompany(email, request);
+        return userMapper.toResponse(updated);
     }
 
     @DELETE

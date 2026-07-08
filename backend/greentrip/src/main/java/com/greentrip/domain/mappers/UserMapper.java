@@ -25,6 +25,12 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             model.role,
             model.carbonPointsBalance,
             model.totalCo2Saved,
+            model.totalKm,
+            model.stravaRefreshToken,
+            model.workLat,
+            model.workLng,
+            model.workStartTime,
+            model.workEndTime,
             model.company != null ? model.company.id : null,
             model.createdAt
         );
@@ -33,20 +39,31 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
     @Override
     public UserModel toModel(UserEntity entity) {
         if (entity == null) return null;
-        UserModel model = entityManager.find(UserModel.class, entity.id());
+        UserModel model = null;
+        if (entity.id() != null) {
+            model = entityManager.find(UserModel.class, entity.id());
+        }
         if (model == null) {
             model = new UserModel();
             model.id = entity.id();
-            model.name = entity.name();
-            model.email = entity.email();
-            model.password = entity.password();
-            model.role = entity.role();
-            model.carbonPointsBalance = entity.carbonPointsBalance();
-            model.totalCo2Saved = entity.totalCo2Saved();
-            model.createdAt = entity.createdAt();
-            if (entity.companyId() != null) {
-                model.company = entityManager.find(CompanyModel.class, entity.companyId());
-            }
+        }
+        model.name = entity.name();
+        model.email = entity.email();
+        model.password = entity.password();
+        model.role = entity.role();
+        model.carbonPointsBalance = entity.carbonPointsBalance();
+        model.totalCo2Saved = entity.totalCo2Saved();
+        model.totalKm = entity.totalKm();
+        model.stravaRefreshToken = entity.stravaRefreshToken();
+        model.workLat = entity.workLat();
+        model.workLng = entity.workLng();
+        model.workStartTime = entity.workStartTime();
+        model.workEndTime = entity.workEndTime();
+        model.createdAt = entity.createdAt();
+        if (entity.companyId() != null) {
+            model.company = entityManager.find(CompanyModel.class, entity.companyId());
+        } else {
+            model.company = null;
         }
         return model;
     }
@@ -59,7 +76,8 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
             entity.email(),
             entity.role(),
             entity.carbonPointsBalance(),
-            entity.totalCo2Saved()
+            entity.totalCo2Saved(),
+            entity.totalKm()
         );
     }
 }

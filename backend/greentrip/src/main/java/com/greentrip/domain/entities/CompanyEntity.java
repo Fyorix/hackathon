@@ -11,5 +11,7 @@ public record CompanyEntity(
     Integer totalPoints,
     Double totalKm,
     LocalDateTime createdAt,
+    Double latitude,
+    Double longitude,
     String logoPath
 ) {}
