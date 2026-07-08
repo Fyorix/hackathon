@@ -108,8 +108,10 @@ async function importSelected() {
     const res = await StravaService.importCommuteCandidates({
       stravaActivityIds: selectedActivityIds.value,
     });
-    successMsg.value = `${res.importedCount} trajet(s) importé(s) avec succès !` + 
-      (res.skippedCount > 0 ? ` (${res.skippedCount} ignoré(s) car hors-limite journalière)` : "");
+    const importedCount = res.imported?.length || 0;
+    const skippedCount = res.skipped?.length || 0;
+    successMsg.value = `${importedCount} trajet(s) importé(s) avec succès !` + 
+      (skippedCount > 0 ? ` (${skippedCount} ignoré(s) car hors-limite ou déjà importé(s))` : "");
     selectedActivityIds.value = [];
     await fetchCandidates();
   } catch (err: any) {
