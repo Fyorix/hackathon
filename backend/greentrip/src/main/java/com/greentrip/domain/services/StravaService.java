@@ -25,8 +25,8 @@ public class StravaService {
     /**
      * Builds the Strava OAuth2 consent URL to redirect the user to.
      */
-    public String getAuthorizationUrl() {
-        return stravaClient.buildAuthorizationUrl();
+    public String getAuthorizationUrl(String state) {
+        return stravaClient.buildAuthorizationUrl(state);
     }
 
     /**

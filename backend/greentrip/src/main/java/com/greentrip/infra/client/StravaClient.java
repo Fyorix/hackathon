@@ -40,13 +40,14 @@ public class StravaClient {
      * Builds the URL the frontend must redirect the user to in order to grant
      * GreenTrip access to their Strava account.
      */
-    public String buildAuthorizationUrl() {
+    public String buildAuthorizationUrl(String state) {
         return UriBuilder.fromUri(AUTHORIZE_URL)
                 .queryParam("client_id", clientId)
                 .queryParam("redirect_uri", redirectUri)
                 .queryParam("response_type", "code")
                 .queryParam("approval_prompt", "auto")
                 .queryParam("scope", SCOPES)
+                .queryParam("state", state)
                 .build()
                 .toString();
     }
