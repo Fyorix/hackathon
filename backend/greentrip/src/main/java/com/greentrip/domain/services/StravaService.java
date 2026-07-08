@@ -36,7 +36,7 @@ public class StravaService {
 
     private static final double COMMUTE_RADIUS_METERS = 500.0;
     private static final int DAILY_IMPORT_LIMIT = 2;
-    private static final int LOOKBACK_DAYS = 30;
+    private static final int LOOKBACK_DAYS = 90;
     private static final int ACTIVITIES_PER_PAGE = 50;
     private static final int MAX_PAGES = 5;
     private static final long TOKEN_REFRESH_BUFFER_SECONDS = 60;
