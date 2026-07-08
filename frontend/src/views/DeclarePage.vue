@@ -1,44 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
-import { TripsService, StravaService } from "../api";
+import { StravaService } from "../api";
 import type { StravaCommuteCandidateResponse } from "../api/types";
 
-interface TransportMode {
-  label: string;
-  value: string;
-}
-
-const transportModes: TransportMode[] = [
-  {
-    label: "Vélo",
-    value: "BIKE",
-  },
-  {
-    label: "Vélo électrique",
-    value: "ELECTRIC_BIKE",
-  },
-  {
-    label: "Marche",
-    value: "WALK",
-  },
-  {
-    label: "Autre transport 0 émission",
-    value: "OTHER_ZERO_EMISSION",
-  },
-];
-
-// Tabs State
-const activeTab = ref<"manual" | "strava">("manual");
-
 // Common State
-const loading = ref(false);
 const errorMsg = ref("");
 const successMsg = ref("");
-
-// Manual Declaration Form State
-const distance = ref<number | null>(null);
-const transport = ref<string>(transportModes[0].value);
-const date = ref<string>(new Date().toISOString().split("T")[0]);
 
 // Strava Integration State
 const isStravaLinked = ref(false);
@@ -48,35 +15,11 @@ const candidates = ref<StravaCommuteCandidateResponse[]>([]);
 const selectedActivityIds = ref<number[]>([]);
 const importing = ref(false);
 
-// Submit manual trip declaration
-async function submitManual() {
-  if (distance.value === null || distance.value <= 0) {
-    errorMsg.value = "La distance doit être strictement supérieure à 0.";
-    return;
-  }
-  loading.value = true;
-  errorMsg.value = "";
-  successMsg.value = "";
-
-  try {
-    await TripsService.create({
-      distanceKm: distance.value,
-      type: transport.value as any,
-    });
-    successMsg.value = "Votre trajet a été déclaré avec succès !";
-    distance.value = null;
-  } catch (err: any) {
-    console.error("Error creating trip:", err);
-    errorMsg.value = err.message || "Une erreur est survenue lors de la déclaration.";
-  } finally {
-    loading.value = false;
-  }
-}
-
 // Fetch Strava candidates
 async function fetchCandidates() {
   loadingStrava.value = true;
   isLocationMissing.value = false;
+  errorMsg.value = "";
   try {
     const res = await StravaService.getCommuteCandidates();
     candidates.value = res || [];
@@ -167,22 +110,8 @@ function getTransportBadgeClass(type: string) {
   return "bg-slate-50 text-slate-600 border border-slate-100";
 }
 
-// Watch activeTab to load Strava candidates automatically
-function handleTabChange(tab: "manual" | "strava") {
-  activeTab.value = tab;
-  errorMsg.value = "";
-  successMsg.value = "";
-  if (tab === "strava") {
-    fetchCandidates();
-  }
-}
-
 onMounted(() => {
-  // If redirected back from Strava OAuth redirect, pre-activate Strava tab
-  const params = new URLSearchParams(window.location.search);
-  if (params.has("strava")) {
-    handleTabChange("strava");
-  }
+  fetchCandidates();
 });
 </script>
 
@@ -193,23 +122,10 @@ onMounted(() => {
         Déclarer un trajet
       </h1>
 
-      <!-- Navigation Tabs -->
-      <div class="flex border-b border-slate-200">
-        <button 
-          @click="handleTabChange('manual')" 
-          class="flex-1 py-3 text-center font-bold text-sm border-b-2 transition duration-200 cursor-pointer"
-          :class="activeTab === 'manual' ? 'border-[var(--color-primgreen)] text-[var(--color-primgreen)]' : 'border-transparent text-slate-500 hover:text-slate-700'"
-        >
-          ✍️ Déclaration Manuelle
-        </button>
-        <button 
-          @click="handleTabChange('strava')" 
-          class="flex-1 py-3 text-center font-bold text-sm border-b-2 transition duration-200 cursor-pointer"
-          :class="activeTab === 'strava' ? 'border-[var(--color-primgreen)] text-[var(--color-primgreen)]' : 'border-transparent text-slate-500 hover:text-slate-700'"
-        >
-          🟠 Synchronisation Strava
-        </button>
-      </div>
+      <!-- Subtitle/context -->
+      <p class="text-sm text-slate-500 font-light leading-relaxed">
+        Synchronisez vos trajets domicile-travail directement à partir de vos activités Strava récentes.
+      </p>
 
       <!-- Alert Banners -->
       <div v-if="errorMsg" class="p-4 rounded-xl bg-red-50 text-red-700 border border-red-200 text-sm font-semibold">
@@ -219,71 +135,8 @@ onMounted(() => {
         ✅ {{ successMsg }}
       </div>
 
-      <!-- Tab Content: Manual -->
-      <div v-if="activeTab === 'manual'">
-        <form class="space-y-6" @submit.prevent="submitManual">
-          <!-- Distance -->
-          <div>
-            <label class="mb-2 block font-semibold text-slate-700 text-sm">
-              Nombre de kilomètres
-            </label>
-            <input
-              v-model="distance"
-              type="number"
-              min="0"
-              step="0.1"
-              required
-              placeholder="Ex : 12.5"
-              class="w-full rounded-xl border border-slate-300 p-3 focus:border-[var(--color-primblue)] focus:ring-2 focus:ring-[var(--color-primblue)]/10 focus:outline-none transition"
-            />
-          </div>
-
-          <!-- Moyen de transport -->
-          <div>
-            <label class="mb-2 block font-semibold text-slate-700 text-sm">
-              Moyen de transport
-            </label>
-            <select
-              v-model="transport"
-              class="w-full rounded-xl border border-slate-300 p-3 focus:border-[var(--color-primblue)] focus:ring-2 focus:ring-[var(--color-primblue)]/10 focus:outline-none transition"
-            >
-              <option
-                v-for="mode in transportModes"
-                :key="mode.value"
-                :value="mode.value"
-              >
-                {{ mode.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Date -->
-          <div>
-            <label class="mb-2 block font-semibold text-slate-700 text-sm">
-              Date du trajet
-            </label>
-            <input
-              v-model="date"
-              type="date"
-              required
-              class="w-full rounded-xl border border-slate-300 p-3 focus:border-[var(--color-primblue)] focus:ring-2 focus:ring-[var(--color-primblue)]/10 focus:outline-none transition"
-            />
-          </div>
-
-          <div class="pt-4">
-            <button
-              type="submit"
-              :disabled="loading"
-              class="w-full rounded-xl bg-[var(--color-primgreen)] py-3.5 font-bold text-white transition hover:opacity-90 shadow-md cursor-pointer disabled:opacity-50"
-            >
-              {{ loading ? 'Enregistrement...' : 'Déclarer mon trajet' }}
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Tab Content: Strava -->
-      <div v-else class="space-y-6">
+      <!-- Strava content -->
+      <div class="space-y-6">
         <!-- Loading State -->
         <div v-if="loadingStrava" class="flex flex-col items-center justify-center py-12">
           <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#FC5200]"></div>
