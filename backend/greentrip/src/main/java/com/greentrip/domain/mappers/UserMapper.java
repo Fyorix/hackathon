@@ -42,7 +42,10 @@ public class UserMapper implements GenericMapper<UserModel, UserEntity> {
     @Override
     public UserModel toModel(UserEntity entity) {
         if (entity == null) return null;
-        UserModel model = entityManager.find(UserModel.class, entity.id());
+        UserModel model = null;
+        if (entity.id() != null) {
+            model = entityManager.find(UserModel.class, entity.id());
+        }
         if (model == null) {
             model = new UserModel();
             model.id = entity.id();
