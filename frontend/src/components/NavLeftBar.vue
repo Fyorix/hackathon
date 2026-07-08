@@ -7,87 +7,109 @@ const logout = () => {
     clearToken();
     router.push('/login');
 }
-
-const showSitePage = () => {
-    router.push(`/declare`);
-}
 </script>
 
 <template>
-  <div class="sidebar flex flex-col">
-    <div class="flex justify-center py-4">
-      <img
-          :src="logoUrl"
-          alt="Logo"
-          class="w-24 h-auto"
-      />
-    </div>
-    <div class="sidebar-header flex-shrink-0 flex flex-col gap-2 p-2">
-      <router-link
-          class="nav-link flex items-center space-x-2 rounded-xl"
-          to="/">
-        <span>Accueil</span>
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <!-- Logo -->
+      <router-link to="/" class="logo-link">
+        <img :src="logoUrl" alt="GreenTrip Logo" class="logo" />
       </router-link>
-      <router-link
-          class="nav-link flex items-center space-x-2 rounded-xl"
-          to="/declare">
-        <span>Déclarer un trajet</span>
-      </router-link>
-      <router-link
-          class="nav-link flex items-center space-x-2 rounded-xl"
-          to="/leaderboard">
-        <span>Classement</span>
-      </router-link>
-      <router-link
-          class="nav-link flex items-center space-x-2 rounded-xl"
-          to="/profile">
-        <span>Mon Profil</span>
-      </router-link>
-    </div>
-    <div class="flex-grow"></div>
-    <div class="p-2 border-t border-white/10 mt-auto">
-      <button
-          @click="logout"
-          class="nav-link flex items-center space-x-2 rounded-xl w-full text-left hover:bg-red-500/10 hover:text-red-400 !important cursor-pointer text-sm font-medium"
-      >
-        <span>🚪 Déconnexion</span>
+
+      <!-- Nav links -->
+      <div class="nav-links">
+        <router-link class="nav-link" to="/">Accueil</router-link>
+        <router-link class="nav-link" to="/declare">Déclarer un trajet</router-link>
+        <router-link class="nav-link" to="/leaderboard">Classement</router-link>
+        <router-link class="nav-link" to="/profile">Mon Profil</router-link>
+      </div>
+
+      <!-- Logout -->
+      <button @click="logout" class="logout-btn">
+        🚪 Déconnexion
       </button>
     </div>
-  </div>
+  </nav>
 </template>
 
 <style scoped>
-.sidebar {
-  margin-top: 0;
-  padding-top: 5px;
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background: var(--color-primblue);
-  width: var(--navleftbar-width);
-  height: 100vh;
-  color: white;
-  padding: 5px;
-  box-sizing: border-box;
+  width: 100%;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+}
+
+.topnav-inner {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px;
+  height: 62px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
 }
 
 .nav-link {
   color: rgba(255, 255, 255, 0.8) !important;
   text-decoration: none;
   font-weight: 500;
-  padding: 10px 14px;
-  transition: all 0.2s ease-in-out;
+  font-size: 0.92rem;
+  padding: 8px 16px;
+  border-radius: 10px;
+  transition: all 0.18s ease-in-out;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
   color: white !important;
-  background-color: rgba(255, 255, 255, 0.1);
-  background-image: none !important;
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
 .nav-link.router-link-active {
   color: white !important;
   background-color: var(--color-primgreen) !important;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(27, 122, 67, 0.35);
+  box-shadow: 0 3px 10px rgba(27, 122, 67, 0.35);
+}
+
+.logout-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.75);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-weight: 500;
+  font-size: 0.88rem;
+  padding: 7px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.18s ease-in-out;
+}
+
+.logout-btn:hover {
+  color: #ff6b6b;
+  border-color: rgba(255, 107, 107, 0.4);
+  background-color: rgba(255, 107, 107, 0.08);
 }
 </style>
