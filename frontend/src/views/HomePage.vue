@@ -46,99 +46,101 @@ onMounted(() => {
       Tableau de bord
     </h1>
 
-    <!-- Statistiques -->
-    <div class="mx-auto grid  gap-6 md:grid-cols-3">
-      <div class="rounded-2xl bg-white p-8 shadow">
-        <p class="text-gray-500"><i class="pi pi-sparkles"></i> Solde de points carbone</p>
+    <div class="mx-auto max-w-5xl space-y-16">
+      <!-- Statistiques -->
+      <section class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-2xl bg-white p-8 shadow">
+          <p class="text-gray-500"><i class="pi pi-sparkles"></i> Solde de points carbone</p>
 
-        <p class="mt-4 text-5xl font-bold text-[var(--color-primgreen)]">
-          {{ carbonPoints }}
-        </p>
+          <p class="mt-4 text-5xl font-bold text-[var(--color-primgreen)]">
+            {{ carbonPoints }}
+          </p>
 
-        <p class="mt-2 text-sm text-gray-400">
-          points
-        </p>
-      </div>
-
-      <div class="rounded-2xl bg-white p-8 shadow">
-        <p class="text-gray-500"><i class="pi pi-directions"></i> Kilomètres cumulés</p>
-
-        <p class="mt-4 text-5xl font-bold text-[var(--color-primblue)]">
-          {{ kilometers.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }}
-        </p>
-
-        <p class="mt-2 text-sm text-gray-400">
-          km
-        </p>
-      </div>
-
-      <div class="rounded-2xl bg-white p-8 shadow">
-        <p class="text-gray-500"><i class="pi pi-globe"></i> CO₂ évité</p>
-
-        <p class="mt-4 text-5xl font-bold text-[var(--color-primgreen)]">
-          {{ co2Saved.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }}
-        </p>
-
-        <p class="mt-2 text-sm text-gray-400">
-          kg
-        </p>
-      </div>
-    </div>
-
-    <!-- Equivalences d'impact -->
-    <div class="mx-auto mt-10 max-w-4xl rounded-2xl bg-white p-8 shadow">
-      <h2 class="mb-6 text-lg font-bold text-slate-800">Votre impact en clair</h2>
-      <div class="grid gap-6 sm:grid-cols-2">
-        <div class="flex items-center gap-4 rounded-xl bg-slate-50 p-5">
-          <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-primgreen)]/10 text-2xl text-[var(--color-primgreen)]">
-            <i class="pi pi-globe"></i>
-          </div>
-          <p class="text-sm text-slate-600">
-            Équivalent à <span class="font-bold text-[var(--color-primgreen)]">{{ treesEquivalent }}</span> arbres plantés sur une année.
+          <p class="mt-2 text-sm text-gray-400">
+            points
           </p>
         </div>
-        <div class="flex items-center gap-4 rounded-xl bg-slate-50 p-5">
-          <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-primblue)]/10 text-2xl text-[var(--color-primblue)]">
-            <i class="pi pi-car"></i>
-          </div>
-          <p class="text-sm text-slate-600">
-            Environ <span class="font-bold text-[var(--color-primblue)]">{{ carTripsAvoided }}</span> trajets en voiture évités.
+
+        <div class="rounded-2xl bg-white p-8 shadow">
+          <p class="text-gray-500"><i class="pi pi-directions"></i> Kilomètres cumulés</p>
+
+          <p class="mt-4 text-5xl font-bold text-[var(--color-primblue)]">
+            {{ kilometers.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }}
+          </p>
+
+          <p class="mt-2 text-sm text-gray-400">
+            km
           </p>
         </div>
-      </div>
-    </div>
 
-    <!-- Actions rapides -->
-    <div class="mx-auto mt-10 max-w-4xl">
-      <h2 class="mb-6 text-lg font-bold text-slate-800">Actions rapides</h2>
-      <div class="grid gap-6 md:grid-cols-3">
-        <router-link
-          v-for="action in quickActions"
-          :key="action.to"
-          :to="action.to"
-          class="group rounded-2xl bg-white p-6 shadow transition duration-200 hover:-translate-y-1 hover:shadow-lg"
-        >
-          <div
-            class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl text-xl text-white"
-            :style="{ backgroundColor: action.color }"
+        <div class="rounded-2xl bg-white p-8 shadow">
+          <p class="text-gray-500"><i class="pi pi-globe"></i> CO₂ évité</p>
+
+          <p class="mt-4 text-5xl font-bold text-[var(--color-primgreen)]">
+            {{ co2Saved.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }}
+          </p>
+
+          <p class="mt-2 text-sm text-gray-400">
+            kg
+          </p>
+        </div>
+      </section>
+
+      <!-- Impact -->
+      <section class="rounded-2xl bg-white p-8 shadow">
+        <h2 class="mb-6 text-lg font-bold text-slate-800">Votre impact en clair</h2>
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div class="flex items-center gap-4 rounded-xl bg-slate-50 p-5">
+            <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-primgreen)]/10 text-2xl text-[var(--color-primgreen)]">
+              <i class="pi pi-globe"></i>
+            </div>
+            <p class="text-sm text-slate-600">
+              Équivalent à <span class="font-bold text-[var(--color-primgreen)]">{{ treesEquivalent }}</span> arbres plantés sur une année.
+            </p>
+          </div>
+          <div class="flex items-center gap-4 rounded-xl bg-slate-50 p-5">
+            <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-primblue)]/10 text-2xl text-[var(--color-primblue)]">
+              <i class="pi pi-car"></i>
+            </div>
+            <p class="text-sm text-slate-600">
+              Environ <span class="font-bold text-[var(--color-primblue)]">{{ carTripsAvoided }}</span> trajets en voiture évités.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <section>
+        <h2 class="mb-6 text-lg font-bold text-slate-800">Actions rapides</h2>
+        <div class="grid gap-6 md:grid-cols-3">
+          <router-link
+            v-for="action in quickActions"
+            :key="action.to"
+            :to="action.to"
+            class="group rounded-2xl bg-white p-6 shadow transition duration-200 hover:-translate-y-1 hover:shadow-lg"
           >
-            <i :class="action.icon"></i>
-          </div>
-          <h3 class="font-bold text-slate-800 group-hover:text-[var(--color-primblue)]">{{ action.label }}</h3>
-          <p class="mt-1 text-sm text-slate-500">{{ action.desc }}</p>
-        </router-link>
-      </div>
-    </div>
+            <div
+              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl text-xl text-white"
+              :style="{ backgroundColor: action.color }"
+            >
+              <i :class="action.icon"></i>
+            </div>
+            <h3 class="font-bold text-slate-800 group-hover:text-[var(--color-primblue)]">{{ action.label }}</h3>
+            <p class="mt-1 text-sm text-slate-500">{{ action.desc }}</p>
+          </router-link>
+        </div>
+      </section>
 
-    <!-- Astuces -->
-    <div class="mx-auto mt-10 mb-10 max-w-4xl rounded-2xl bg-white p-8 shadow">
-      <h2 class="mb-6 text-lg font-bold text-slate-800">Astuces</h2>
-      <ul class="space-y-4">
-        <li v-for="tip in tips" :key="tip.text" class="flex items-start gap-3 text-sm text-slate-600">
-          <i :class="tip.icon" class="mt-0.5 text-[var(--color-primgreen)]"></i>
-          <span>{{ tip.text }}</span>
-        </li>
-      </ul>
+      <!-- Astuces -->
+      <section class="rounded-2xl bg-white p-8 shadow">
+        <h2 class="mb-6 text-lg font-bold text-slate-800">Astuces</h2>
+        <ul class="space-y-4">
+          <li v-for="tip in tips" :key="tip.text" class="flex items-start gap-3 text-sm text-slate-600">
+            <i :class="tip.icon" class="mt-0.5 text-[var(--color-primgreen)]"></i>
+            <span>{{ tip.text }}</span>
+          </li>
+        </ul>
+      </section>
     </div>
   </div>
 </template>

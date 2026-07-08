@@ -143,7 +143,7 @@ const listItems = computed(() => {
       </div>
     </div>
     <!-- PODIUM FOR TOP 3 -->
-    <div class="flex w-full justify-center items-end gap-3 md:gap-6 max-w-3xl mx-auto mb-12 px-2 pt-6">
+    <div class="flex w-full justify-center items-end gap-3 md:gap-6 mb-14 px-2 pt-6">
       
       <!-- 2nd Place -->
       <div v-if="podium.second" class="flex flex-col items-center order-1 w-28 md:w-36 flex-shrink-0">
@@ -259,7 +259,7 @@ const listItems = computed(() => {
       </div>
     </div>
     <!-- LIST OF OTHER ITEMS -->
-    <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden mb-6">
+    <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden mb-10">
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>

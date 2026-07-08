@@ -430,7 +430,7 @@ onMounted(() => {
       </div>
 
       <!-- Main Leaderboard Component Container -->
-      <div class="bg-slate-50 rounded-3xl p-2">
+      <div class="bg-slate-50 rounded-3xl p-2 mt-8">
         <p v-if="errorMsg" class="mb-4 text-red-500 font-semibold text-center">{{ errorMsg }}</p>
 
         <!-- Company Leaderboard -->
