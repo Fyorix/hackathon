@@ -25,7 +25,9 @@ public class TripMapper implements GenericMapper<TripModel, TripEntity> {
             model.type,
             model.status,
             model.user != null ? model.user.id : null,
-            model.createdAt
+            model.createdAt,
+            model.stravaActivityId,
+            model.tripDate
         );
     }
 
@@ -40,7 +42,9 @@ public class TripMapper implements GenericMapper<TripModel, TripEntity> {
         model.type = entity.type();
         model.status = entity.status();
         model.createdAt = entity.createdAt();
-        
+        model.stravaActivityId = entity.stravaActivityId();
+        model.tripDate = entity.tripDate();
+
         if (entity.userId() != null) {
             model.user = entityManager.find(UserModel.class, entity.userId());
         }

@@ -1,5 +1,6 @@
 package com.greentrip.domain.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record TripEntity(
@@ -10,5 +11,7 @@ public record TripEntity(
     TransportType type,
     String status,
     Long userId,
-    LocalDateTime createdAt
+    LocalDateTime createdAt,
+    Long stravaActivityId,
+    LocalDate tripDate
 ) {}
