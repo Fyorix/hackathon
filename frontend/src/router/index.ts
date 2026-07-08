@@ -5,6 +5,7 @@ import ShopPage from '@/views/ShopPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
 import LeaderboardPage from '@/views/LeaderboardPage.vue'
+import ProfilePage from '@/views/ProfilePage.vue'
 import { isAuthenticated } from '@/api'
 
 const router = createRouter({
@@ -41,6 +42,11 @@ const router = createRouter({
             path: '/leaderboard',
             name: 'leaderboard',
             component: LeaderboardPage,
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: ProfilePage,
         },
     ],
     scrollBehavior() {
