@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import router from '@/router';
 import logoUrl from '@/assets/greenTrip.PNG';
+import { clearToken } from '@/api';
+
+const logout = () => {
+    clearToken();
+    router.push('/login');
+}
 
 const showSitePage = () => {
     router.push(`/declare`);
@@ -37,6 +43,15 @@ const showSitePage = () => {
           to="/profile">
         <span>Mon Profil</span>
       </router-link>
+    </div>
+    <div class="flex-grow"></div>
+    <div class="p-2 border-t border-white/10 mt-auto">
+      <button
+          @click="logout"
+          class="nav-link flex items-center space-x-2 rounded-xl w-full text-left hover:bg-red-500/10 hover:text-red-400 !important cursor-pointer text-sm font-medium"
+      >
+        <span>🚪 Déconnexion</span>
+      </button>
     </div>
   </div>
 </template>
