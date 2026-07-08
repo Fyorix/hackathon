@@ -151,12 +151,11 @@ const listItems = computed(() => {
         </div>
       </div>
     </div>
-
     <!-- PODIUM FOR TOP 3 -->
-    <div class="grid grid-cols-3 gap-3 md:gap-6 items-end max-w-3xl mx-auto mb-12 px-2 pt-6">
+    <div class="flex justify-center items-end gap-3 md:gap-6 max-w-3xl mx-auto mb-12 px-2 pt-6">
       
       <!-- 2nd Place -->
-      <div v-if="podium.second" class="flex flex-col items-center order-1">
+      <div v-if="podium.second" class="flex flex-col items-center order-1 w-28 md:w-36 flex-shrink-0">
         <div class="relative group cursor-pointer mb-3" @click="emit('click-item', podium.second)">
           <div class="absolute inset-0 bg-slate-300 rounded-full blur-md opacity-40 group-hover:opacity-70 transition duration-300"></div>
           
@@ -191,7 +190,7 @@ const listItems = computed(() => {
       </div>
 
       <!-- 1st Place -->
-      <div v-if="podium.first" class="flex flex-col items-center order-2">
+      <div v-if="podium.first" class="flex flex-col items-center order-2 w-32 md:w-44 flex-shrink-0">
         <div class="relative group cursor-pointer mb-4" @click="emit('click-item', podium.first)">
           <!-- Golden glow -->
           <div class="absolute inset-0 bg-amber-400 rounded-full blur-lg opacity-40 group-hover:opacity-80 transition duration-300 animate-pulse"></div>
@@ -234,7 +233,7 @@ const listItems = computed(() => {
       </div>
 
       <!-- 3rd Place -->
-      <div v-if="podium.third" class="flex flex-col items-center order-3">
+      <div v-if="podium.third" class="flex flex-col items-center order-3 w-28 md:w-36 flex-shrink-0">
         <div class="relative group cursor-pointer mb-3" @click="emit('click-item', podium.third)">
           <div class="absolute inset-0 bg-amber-700 rounded-full blur-md opacity-30 group-hover:opacity-60 transition duration-300"></div>
           
@@ -268,7 +267,6 @@ const listItems = computed(() => {
         </div>
       </div>
     </div>
-
     <!-- LIST OF OTHER ITEMS -->
     <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden mb-6">
       <div class="overflow-x-auto">

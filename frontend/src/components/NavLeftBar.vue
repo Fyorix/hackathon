@@ -32,6 +32,11 @@ const showSitePage = () => {
           to="/leaderboard">
         <span>Classement</span>
       </router-link>
+      <router-link
+          class="nav-link flex items-center space-x-2 rounded-xl"
+          to="/profile">
+        <span>Mon Profil</span>
+      </router-link>
     </div>
   </div>
 </template>
