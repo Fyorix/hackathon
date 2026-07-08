@@ -30,11 +30,6 @@ const showSitePage = () => {
       </router-link>
       <router-link
           class="nav-link flex items-center space-x-2 rounded-xl"
-          to="/shop">
-        <span>Boutique RSE</span>
-      </router-link>
-      <router-link
-          class="nav-link flex items-center space-x-2 rounded-xl"
           to="/leaderboard">
         <span>Classement</span>
       </router-link>
