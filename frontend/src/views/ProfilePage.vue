@@ -199,7 +199,7 @@ onMounted(() => {
               </div>
               <div class="bg-slate-50 p-4 rounded-xl text-center shadow-sm">
                 <span class="text-xs text-gray-500 block mb-1">🌍 CO₂ Évité</span>
-                <span class="text-2xl font-black text-green-600">{{ user?.totalCo2Saved || 0 }} kg</span>
+                <span class="text-2xl font-black text-green-600">{{ (user?.totalCo2Saved || 0).toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }} kg</span>
               </div>
             </div>
           </div>

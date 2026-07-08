@@ -48,7 +48,7 @@ onMounted(() => {
         <p class="text-gray-500">🚲 Kilomètres cumulés</p>
 
         <p class="mt-4 text-5xl font-bold text-[var(--color-primblue)]">
-          {{ kilometers }}
+          {{ kilometers.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }}
         </p>
 
         <p class="mt-2 text-sm text-gray-400">
@@ -60,7 +60,7 @@ onMounted(() => {
         <p class="text-gray-500">🌍 CO₂ évité</p>
 
         <p class="mt-4 text-5xl font-bold text-[var(--color-primgreen)]">
-          {{ co2Saved }}
+          {{ co2Saved.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }}
         </p>
 
         <p class="mt-2 text-sm text-gray-400">
