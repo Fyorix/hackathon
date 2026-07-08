@@ -363,7 +363,7 @@ VALUES (235, 'Lea Bonnet', 'lea.bonnet235@lvmh.fr', 'password123', 'USER', 662, 
 -- COMPANY: SNCF (SIREN: 552049447)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, latitude, longitude, logo_path, created_at)
-VALUES (11, 'SNCF', '552049447', 60000, 1200.13, 75128, 7233.5, 48.8394, 2.3781, 'sncf.webp', NOW());
+VALUES (11, 'SNCF', '552049447', 60000, 1200.13, 75128, 7233.5, 48.8394, 2.3781, 'sncf.png', NOW());
 
 -- Users belonging to SNCF
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, total_km, company_id, created_at)
