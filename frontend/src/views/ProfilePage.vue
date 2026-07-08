@@ -175,7 +175,7 @@ onMounted(() => {
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primblue)]"></div>
       </div>
 
-      <div v-else class="space-y-8">
+      <div v-else class="space-y-14">
         <!-- Profile Overview Card -->
         <div class="rounded-2xl bg-white p-8 shadow relative overflow-hidden">
           <div class="absolute right-0 top-0 w-32 h-32 bg-[var(--color-primgreen)]/5 rounded-full blur-2xl"></div>
@@ -187,18 +187,18 @@ onMounted(() => {
               <h2 class="text-2xl font-bold text-[var(--color-primblue)]">{{ user?.name }}</h2>
               <p class="text-slate-500 font-medium">{{ user?.email }}</p>
               <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600">
-                👤 Rôle : {{ user?.role }}
+                <i class="pi pi-user"></i> Rôle : {{ user?.role }}
               </div>
             </div>
 
             <!-- Stats (matches HomePage) -->
             <div class="grid grid-cols-2 gap-4 w-full md:w-auto">
               <div class="bg-slate-50 p-4 rounded-xl text-center shadow-sm">
-                <span class="text-xs text-gray-500 block mb-1">🌿 Points Carbone</span>
+                <span class="text-xs text-gray-500 block mb-1"><i class="pi pi-sparkles"></i> Points Carbone</span>
                 <span class="text-2xl font-black text-[var(--color-primgreen)]">{{ user?.carbonPointsBalance || 0 }}</span>
               </div>
               <div class="bg-slate-50 p-4 rounded-xl text-center shadow-sm">
-                <span class="text-xs text-gray-500 block mb-1">🌍 CO₂ Évité</span>
+                <span class="text-xs text-gray-500 block mb-1"><i class="pi pi-globe"></i> CO₂ Évité</span>
                 <span class="text-2xl font-black text-green-600">{{ (user?.totalCo2Saved || 0).toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }} kg</span>
               </div>
             </div>
@@ -207,10 +207,10 @@ onMounted(() => {
 
         <!-- Alert messages -->
         <div v-if="errorMsg" class="p-4 rounded-xl bg-red-50 text-red-700 border border-red-200 text-sm font-semibold shadow-sm">
-          ⚠️ {{ errorMsg }}
+          <i class="pi pi-exclamation-triangle"></i> {{ errorMsg }}
         </div>
         <div v-if="successMsg" class="p-4 rounded-xl bg-green-50 text-[var(--color-primgreen)] border border-green-200 text-sm font-semibold shadow-sm">
-          ✅ {{ successMsg }}
+          <i class="pi pi-check-circle"></i> {{ successMsg }}
         </div>
 
         <!-- Company details state (When not editing and has company) -->
@@ -235,18 +235,18 @@ onMounted(() => {
                   class="max-w-full max-h-full object-contain"
                   alt="Logo"
                 />
-                <span v-else class="text-2xl font-bold text-slate-400">🏢</span>
+                <i v-else class="pi pi-building text-2xl text-slate-400"></i>
               </div>
               <div>
                 <h4 class="text-xl font-bold text-slate-900">{{ currentCompany.name }}</h4>
                 <p class="text-sm text-slate-400 font-mono">SIREN: {{ currentCompany.sirenNumber }}</p>
-                <p class="text-xs text-slate-500 font-medium mt-1">👥 {{ currentCompany.totalEmployees || 1 }} employés actifs</p>
+                <p class="text-xs text-slate-500 font-medium mt-1"><i class="pi pi-users"></i> {{ currentCompany.totalEmployees || 1 }} employés actifs</p>
               </div>
             </div>
 
             <!-- Commute Settings Summary -->
             <div class="w-full md:w-80 bg-slate-50 p-6 rounded-2xl shadow-sm border border-slate-100 space-y-3 text-sm">
-              <h5 class="font-bold text-slate-700 border-b border-slate-200 pb-2">📍 Paramètres de trajet</h5>
+              <h5 class="font-bold text-slate-700 border-b border-slate-200 pb-2"><i class="pi pi-map-marker"></i> Paramètres de trajet</h5>
               <div class="flex justify-between">
                 <span class="text-slate-500">Latitude bureau:</span>
                 <span class="font-mono font-semibold">{{ workLat }}</span>
@@ -307,7 +307,7 @@ onMounted(() => {
                   @click="geolocateUser"
                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer"
                 >
-                  📍 Me géolocaliser
+<i class="pi pi-map-marker"></i> Me géolocaliser
                 </button>
               </div>
 
@@ -379,7 +379,7 @@ onMounted(() => {
         <div class="rounded-2xl bg-white p-8 shadow space-y-6">
           <div class="flex justify-between items-center border-b border-slate-100 pb-4">
             <h3 class="text-xl font-bold text-[var(--color-primblue)] flex items-center gap-2">
-              <span class="text-2xl">🟠</span> Intégration Strava
+<i class="pi pi-link text-2xl text-[#FC5200]"></i> Intégration Strava
             </h3>
             <span 
               v-if="isStravaLinked" 
@@ -413,10 +413,10 @@ onMounted(() => {
                 class="px-6 py-3 bg-[#FC5200] hover:bg-[#e04900] text-white font-bold rounded-xl shadow-md transition duration-200 flex items-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 <span v-if="loadingStrava" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
-                <span v-else>🟠</span> Connecter mon compte Strava
+                <i v-else class="pi pi-link"></i> Connecter mon compte Strava
               </button>
               <div v-else class="text-sm font-semibold text-slate-700 flex items-center gap-1.5 bg-green-50/50 p-3 rounded-xl border border-green-100">
-                <span>Liaison active avec Strava ✅</span>
+                <span>Liaison active avec Strava <i class="pi pi-check-circle"></i></span>
               </div>
             </div>
           </div>
