@@ -355,10 +355,6 @@ onMounted(() => {
         <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
         <div class="absolute -left-10 -bottom-10 w-52 h-52 bg-[var(--color-primgreen)]/10 rounded-full blur-3xl"></div>
         
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[var(--color-primgreen)] text-white mb-4 animate-pulse">
-          🌱 Compétition RSE
-        </span>
-        
         <h1 class="text-3xl md:text-5xl font-black tracking-tight mb-3">
           Leaderboard des Entreprises
         </h1>
