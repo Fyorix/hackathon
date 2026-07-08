@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
 import router from '@/router';
-
+import logoUrl from '@/assets/greenTrip.PNG';
 
 const showSitePage = () => {
     router.push(`/declare`);
@@ -12,7 +11,7 @@ const showSitePage = () => {
   <div class="sidebar flex flex-col">
     <div class="flex justify-center py-4">
       <img
-          src="/logo.png"
+          :src="logoUrl"
           alt="Logo"
           class="w-24 h-auto"
       />
@@ -74,6 +73,6 @@ const showSitePage = () => {
   color: white !important;
   background-color: var(--color-primgreen) !important;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(60, 176, 118, 0.35);
+  box-shadow: 0 4px 12px rgba(27, 122, 67, 0.35);
 }
 </style>

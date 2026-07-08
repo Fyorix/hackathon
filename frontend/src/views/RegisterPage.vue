@@ -67,7 +67,7 @@ async function submit() {
           <input v-model.number="companyId" type="number" min="1" class="w-full border text-black border-black rounded px-3 py-2 focus:outline-none focus:ring" />
         </div>
         <div v-if="error" class="text-red-600 text-sm">{{ error }}</div>
-        <button type="submit" :disabled="loading" class="w-full border-black text-black bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:opacity-50">
+        <button type="submit" :disabled="loading" class="w-full border-black text-black bg-[var(--color-primgreen)] text-white py-2 rounded hover:opacity-90 disabled:opacity-50">
           {{ loading ? 'Création...' : "S'inscrire" }}
         </button>
       </form>

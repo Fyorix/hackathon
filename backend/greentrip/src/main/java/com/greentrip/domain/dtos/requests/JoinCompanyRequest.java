@@ -1,8 +1,10 @@
 package com.greentrip.domain.dtos.requests;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import jakarta.validation.constraints.*;
 import java.time.LocalTime;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import jakarta.validation.constraints.NotNull;
 
 @Schema(name = "JoinCompanyRequest", description = "Payload sent when a user joins a company and sets their commute preferences")
 public record JoinCompanyRequest(

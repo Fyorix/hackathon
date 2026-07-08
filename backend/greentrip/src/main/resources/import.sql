@@ -63,7 +63,7 @@ VALUES (121, 'Zoe Morel', 'zoe.morel121@takima.fr', 'password123', 'USER', 4515,
 -- COMPANY: Decathlon (SIREN: 306138900)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, latitude, longitude, logo_path, created_at)
-VALUES (2, 'Decathlon', '306138900', 15000, 760.2, 41146, 4283.8, 50.6278, 3.1408, 'decathlon.webp', NOW());
+VALUES (2, 'Decathlon', '306138900', 15000, 760.2, 41146, 4283.8, 50.6278, 3.1408, 'decathlon.png', NOW());
 
 -- Users belonging to Decathlon
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, total_km, company_id, created_at)
@@ -177,7 +177,7 @@ VALUES (166, 'Eva Thomas', 'eva.thomas166@doctolib.fr', 'password123', 'USER', 1
 -- COMPANY: Back Market (SIREN: 807923761)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, latitude, longitude, logo_path, created_at)
-VALUES (5, 'Back Market', '807923761', 300, 430.42, 26780, 2624.0, 48.8732, 2.3478, 'back_market.avif', NOW());
+VALUES (5, 'Back Market', '807923761', 300, 430.42, 26780, 2624.0, 48.8732, 2.3478, 'back_market.png', NOW());
 
 -- Users belonging to Back Market
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, total_km, company_id, created_at)
@@ -363,7 +363,7 @@ VALUES (235, 'Lea Bonnet', 'lea.bonnet235@lvmh.fr', 'password123', 'USER', 662, 
 -- COMPANY: SNCF (SIREN: 552049447)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, latitude, longitude, logo_path, created_at)
-VALUES (11, 'SNCF', '552049447', 60000, 1200.13, 75128, 7233.5, 48.8394, 2.3781, 'sncf.webp', NOW());
+VALUES (11, 'SNCF', '552049447', 60000, 1200.13, 75128, 7233.5, 48.8394, 2.3781, 'sncf.png', NOW());
 
 -- Users belonging to SNCF
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, total_km, company_id, created_at)
@@ -421,7 +421,7 @@ VALUES (260, 'Emma Moreau', 'emma.moreau260@sncf.fr', 'password123', 'USER', 198
 -- COMPANY: EDF (SIREN: 552081317)
 -- ========================================================
 INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, latitude, longitude, logo_path, created_at)
-VALUES (12, 'EDF', '552081317', 45000, 782.67, 48460, 4865.3, 48.8735, 2.2954, 'edf.webp', NOW());
+VALUES (12, 'EDF', '552081317', 45000, 782.67, 48460, 4865.3, 48.8735, 2.2954, 'edf.png', NOW());
 
 -- Users belonging to EDF
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, total_km, company_id, created_at)
