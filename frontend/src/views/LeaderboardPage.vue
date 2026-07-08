@@ -350,17 +350,11 @@ onMounted(() => {
   <div class="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-6 md:p-10">
     <div class="max-w-6xl mx-auto">
       
-      <!-- Premium Header Card (Company Mode) -->
-      <header v-if="!selectedCompany" class="mb-10 text-center relative overflow-hidden rounded-3xl bg-gradient-to-r from-[var(--color-primblue)] to-[#095487] text-white p-8 md:p-12 shadow-xl animate-fade-in">
-        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
-        <div class="absolute -left-10 -bottom-10 w-52 h-52 bg-[var(--color-primgreen)]/10 rounded-full blur-3xl"></div>
-        
-        <h1 class="text-3xl md:text-5xl font-black tracking-tight mb-3">
-          Leaderboard des Entreprises
+      <!-- Header (Company Mode) -->
+      <header v-if="!selectedCompany" class="mb-10 text-center animate-fade-in">
+        <h1 class="text-4xl font-bold text-[var(--color-primblue)]">
+          Leaderboard
         </h1>
-        <p class="text-slate-200 text-sm md:text-base max-w-2xl mx-auto font-light leading-relaxed">
-          Suivez l'impact écologique collectif de chaque entreprise. Comparez les kilomètres parcourus à vélo, en marche ou en covoiturage, et les points carbone accumulés ! Cliquez sur une entreprise pour voir ses employés.
-        </p>
       </header>
 
       <!-- Premium Header Card (User/Employee Mode) -->
