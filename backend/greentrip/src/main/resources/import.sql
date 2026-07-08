@@ -701,3 +701,10 @@ VALUES (365, 'Mathieu Bernard', 'mathieu.bernard365@yousign.com', 'password123',
 INSERT INTO USERS (id, name, email, password, role, carbon_points_balance, total_co2_saved, total_km, company_id, created_at)
 VALUES (366, 'Zoe Thomas', 'zoe.thomas366@yousign.com', 'password123', 'USER', 4001, 61.2, 391.8, 20, NOW());
 
+-- ========================================================
+-- COMPANY: EcoShift (SIREN: 802143576)
+-- ========================================================
+INSERT INTO COMPANIES (id, name, siren_number, total_employees, total_co2_saved, total_points, total_km, latitude, longitude, logo_path, created_at)
+VALUES (21, 'EcoShift', '802143576', 1, 0.0, 0, 0.0, 48.74413665977345, 2.297727268811412, 'default.png', NOW());
+
+
