@@ -2,6 +2,7 @@ package com.greentrip.domain.models;
 
 import com.greentrip.domain.entities.TransportType;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "TRIPS")
@@ -22,6 +23,12 @@ public class TripModel extends BaseModel {
 
     @Column(nullable = true)
     public String status;
+
+    @Column(name = "strava_activity_id", unique = true)
+    public Long stravaActivityId;
+
+    @Column(name = "trip_date")
+    public LocalDate tripDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

@@ -63,7 +63,9 @@ public class TripService {
                 transportType,
                 "COMPLETED",
                 userModel.id,
-                java.time.LocalDateTime.now()
+                java.time.LocalDateTime.now(),
+                null,
+                java.time.LocalDate.now()
         );
         TripEntity createdTrip = tripRepository.create(tripEntity);
 
