@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
 import router from '@/router';
-
+import logoUrl from '@/assets/greenTrip.jfif';
 
 const showSitePage = () => {
     router.push(`/declare`);
@@ -12,7 +11,7 @@ const showSitePage = () => {
   <div class="sidebar flex flex-col">
     <div class="flex justify-center py-4">
       <img
-          src="/logo.png"
+          :src="logoUrl"
           alt="Logo"
           class="w-24 h-auto"
       />
