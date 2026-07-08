@@ -11,6 +11,8 @@ export const CompaniesService = {
   delete: (id: number) => http.delete<void>(`/api/companies/${id}`),
   search: (query: string, pagination?: PaginationQuery) =>
     http.get<CompanyResponse[]>('/api/companies/search', { query, ...pagination }),
+  userLeaderboard: (companyId: number, query?: PaginationQuery & { sortBy?: string; desc?: boolean }) =>
+    http.get<UserResponse[]>(`/api/companies/${companyId}/leaderboard`, query),
   searchUsers: (companyId: number, query: string, pagination?: PaginationQuery) =>
     http.get<UserResponse[]>(`/api/companies/${companyId}/leaderboard/search`, { query, ...pagination })
 }
