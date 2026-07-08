@@ -125,6 +125,28 @@ function getAvatarBg(name: string = '') {
   return `hsl(${hue}, 60%, 45%)`
 }
 
+// Track logos that failed to load
+const failedLogos = ref<Record<number, boolean>>({})
+
+// Resolve backend image filenames to the frontend/src/assets/companies directory
+function getLogoUrl(logoPath?: string) {
+  if (!logoPath) return ''
+  const filename = logoPath.split('/').pop() || logoPath
+  try {
+    return new URL(`../assets/companies/${filename}`, import.meta.url).href
+  } catch (e) {
+    console.error('Error resolving logo URL:', e)
+    return ''
+  }
+}
+
+// Handler for image loading error
+function handleImageError(companyId?: number) {
+  if (companyId) {
+    failedLogos.value[companyId] = true
+  }
+}
+
 onMounted(() => {
   fetchLeaderboard()
   fetchMyCompany()
@@ -248,7 +270,8 @@ onMounted(() => {
               <div class="absolute inset-0 bg-slate-300 rounded-full blur-md opacity-40 group-hover:opacity-70 transition duration-300"></div>
               
               <!-- Avatar -->
-              <img v-if="podium.second.logoPath" :src="podium.second.logoPath" :alt="podium.second.name" 
+              <img v-if="podium.second.logoPath && !failedLogos[podium.second.id || 0]" :src="getLogoUrl(podium.second.logoPath)" :alt="podium.second.name" 
+                   @error="handleImageError(podium.second.id)"
                    class="relative w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-4 border-slate-300 bg-white z-10" />
               <div v-else :style="{ backgroundColor: getAvatarBg(podium.second.name) }"
                    class="relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center font-bold text-white text-xl md:text-2xl border-4 border-slate-300 z-10">
@@ -290,7 +313,8 @@ onMounted(() => {
               </div>
               
               <!-- Avatar -->
-              <img v-if="podium.first.logoPath" :src="podium.first.logoPath" :alt="podium.first.name" 
+              <img v-if="podium.first.logoPath && !failedLogos[podium.first.id || 0]" :src="getLogoUrl(podium.first.logoPath)" :alt="podium.first.name" 
+                   @error="handleImageError(podium.first.id)"
                    class="relative w-20 h-20 md:w-26 md:h-26 rounded-full object-cover border-4 border-amber-400 bg-white z-10 shadow-lg" />
               <div v-else :style="{ backgroundColor: getAvatarBg(podium.first.name) }"
                    class="relative w-20 h-20 md:w-26 md:h-26 rounded-full flex items-center justify-center font-bold text-white text-2xl md:text-3xl border-4 border-amber-400 z-10 shadow-lg">
@@ -322,7 +346,8 @@ onMounted(() => {
               <div class="absolute inset-0 bg-amber-700 rounded-full blur-md opacity-30 group-hover:opacity-60 transition duration-300"></div>
               
               <!-- Avatar -->
-              <img v-if="podium.third.logoPath" :src="podium.third.logoPath" :alt="podium.third.name" 
+              <img v-if="podium.third.logoPath && !failedLogos[podium.third.id || 0]" :src="getLogoUrl(podium.third.logoPath)" :alt="podium.third.name" 
+                   @error="handleImageError(podium.third.id)"
                    class="relative w-14 h-14 md:w-18 md:h-18 rounded-full object-cover border-4 border-amber-700/60 bg-white z-10" />
               <div v-else :style="{ backgroundColor: getAvatarBg(podium.third.name) }"
                    class="relative w-14 h-14 md:w-18 md:h-18 rounded-full flex items-center justify-center font-bold text-white text-lg md:text-xl border-4 border-amber-700/60 z-10">
@@ -382,7 +407,8 @@ onMounted(() => {
                   <!-- Company info -->
                   <td class="py-4 px-6">
                     <div class="flex items-center gap-3">
-                      <img v-if="company.logoPath" :src="company.logoPath" :alt="company.name" 
+                      <img v-if="company.logoPath && !failedLogos[company.id || 0]" :src="getLogoUrl(company.logoPath)" :alt="company.name" 
+                           @error="handleImageError(company.id)"
                            class="w-10 h-10 rounded-xl object-cover border border-slate-200/80 bg-white" />
                       <div v-else :style="{ backgroundColor: getAvatarBg(company.name) }"
                            class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white text-sm">
