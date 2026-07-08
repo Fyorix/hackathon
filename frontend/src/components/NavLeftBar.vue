@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import router from '@/router';
-import logoUrl from '@/assets/greenTrip.jfif';
+import logoUrl from '@/assets/greenTrip.PNG';
 
 const showSitePage = () => {
     router.push(`/declare`);
