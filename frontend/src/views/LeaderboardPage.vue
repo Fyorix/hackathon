@@ -388,7 +388,7 @@ onMounted(() => {
             <!-- Company Text Details -->
             <div class="text-center md:text-left flex-1">
               <span class="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-900/50">
-                🏢 Impact d'Équipe
+<i class="pi pi-building"></i> Impact d'Équipe
               </span>
               <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2 text-white">
                 {{ selectedCompany.name }}

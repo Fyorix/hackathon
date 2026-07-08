@@ -129,10 +129,10 @@ onMounted(() => {
 
       <!-- Alert Banners -->
       <div v-if="errorMsg" class="p-4 rounded-xl bg-red-50 text-red-700 border border-red-200 text-sm font-semibold">
-        ⚠️ {{ errorMsg }}
+        <i class="pi pi-exclamation-triangle"></i> {{ errorMsg }}
       </div>
       <div v-if="successMsg" class="p-4 rounded-xl bg-green-50 text-green-800 border border-green-200 text-sm font-semibold">
-        ✅ {{ successMsg }}
+        <i class="pi pi-check-circle"></i> {{ successMsg }}
       </div>
 
       <!-- Strava content -->
@@ -146,7 +146,7 @@ onMounted(() => {
         <div v-else>
           <!-- Not Linked State -->
           <div v-if="!isStravaLinked" class="text-center py-8 space-y-4">
-            <div class="text-5xl">🟠</div>
+            <div class="text-5xl text-[#FC5200]"><i class="pi pi-link"></i></div>
             <h3 class="text-lg font-bold text-slate-800">Compte Strava non connecté</h3>
             <p class="text-slate-500 text-sm max-w-sm mx-auto">
               Pour importer automatiquement vos activités de trajet, vous devez associer votre compte Strava depuis vos paramètres.
@@ -161,7 +161,7 @@ onMounted(() => {
 
           <!-- Location Missing State -->
           <div v-else-if="isLocationMissing" class="text-center py-8 space-y-4">
-            <div class="text-5xl">🏢</div>
+            <div class="text-5xl text-[var(--color-primblue)]"><i class="pi pi-building"></i></div>
             <h3 class="text-lg font-bold text-slate-800">Coordonnées professionnelles manquantes</h3>
             <p class="text-slate-500 text-sm max-w-sm mx-auto">
               Pour valider l'éligibilité de vos trajets Strava (moins de 500m de votre bureau), vous devez renseigner la localisation de votre entreprise dans votre Profil.
@@ -178,7 +178,7 @@ onMounted(() => {
           <div v-else class="space-y-6">
             <!-- Empty Candidates State -->
             <div v-if="candidates.length === 0" class="text-center py-8 space-y-2">
-              <div class="text-4xl">🚲</div>
+              <div class="text-4xl text-[var(--color-primgreen)]"><i class="pi pi-directions"></i></div>
               <h3 class="text-base font-bold text-slate-700">Aucun trajet éligible trouvé</h3>
               <p class="text-slate-500 text-xs max-w-xs mx-auto">
                 Nous n'avons détecté aucune activité récente débutant ou se terminant dans un rayon de 500m autour de votre bureau.
@@ -187,7 +187,7 @@ onMounted(() => {
                 @click="fetchCandidates" 
                 class="mt-2 text-xs font-semibold text-[var(--color-primblue)] hover:underline cursor-pointer"
               >
-                🔄 Rafraîchir les activités
+<i class="pi pi-refresh"></i> Rafraîchir les activités
               </button>
             </div>
 
@@ -222,8 +222,8 @@ onMounted(() => {
                       </span>
                     </div>
                     <div class="flex gap-4 text-xs text-slate-400 mt-1">
-                      <span>📏 {{ act.distanceKm.toFixed(1) }} km</span>
-                      <span>📅 {{ formatDate(act.startDate) }}</span>
+                      <span><i class="pi pi-arrows-h"></i> {{ act.distanceKm.toFixed(1) }} km</span>
+                      <span><i class="pi pi-calendar"></i> {{ formatDate(act.startDate) }}</span>
                     </div>
                   </label>
                 </div>
@@ -244,7 +244,7 @@ onMounted(() => {
                   :disabled="importing"
                   class="w-full border border-slate-200 hover:bg-slate-50 py-3 text-sm font-semibold text-slate-600 rounded-xl transition cursor-pointer"
                 >
-                  🔄 Rafraîchir
+                  <i class="pi pi-refresh"></i> Rafraîchir
                 </button>
               </div>
             </div>

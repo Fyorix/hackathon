@@ -98,11 +98,9 @@ const listItems = computed(() => {
             class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 cursor-pointer"
             :class="sortBy === 'CO2' ? 'bg-white text-[var(--color-primblue)] shadow-sm' : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-[var(--color-primgreen)]">
-              <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.39.4.08.56-.17.56-.38v-1.34c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.65.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .22.15.47.57.38C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" />
-            </svg>
+            <i class="pi pi-sparkles text-[var(--color-primgreen)]"></i>
             CO₂ évité
-            <span v-if="sortBy === 'CO2'" class="text-[10px]">{{ desc ? '▼' : '▲' }}</span>
+            <span v-if="sortBy === 'CO2'" class="text-[10px]"><i :class="desc ? 'pi pi-sort-amount-down' : 'pi pi-sort-amount-up'"></i></span>
           </button>
 
           <!-- POINTS -->
@@ -112,11 +110,9 @@ const listItems = computed(() => {
             class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 cursor-pointer"
             :class="sortBy === 'POINTS' ? 'bg-white text-[var(--color-primblue)] shadow-sm' : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-amber-500">
-              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12 19c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm-1.5-11.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm4.5 5.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-5.25 4.5h4.5a.75.75 0 000-1.5h-4.5a.75.75 0 000 1.5z" clip-rule="evenodd" />
-            </svg>
+            <i class="pi pi-star-fill text-amber-500"></i>
             Points
-            <span v-if="sortBy === 'POINTS'" class="text-[10px]">{{ desc ? '▼' : '▲' }}</span>
+            <span v-if="sortBy === 'POINTS'" class="text-[10px]"><i :class="desc ? 'pi pi-sort-amount-down' : 'pi pi-sort-amount-up'"></i></span>
           </button>
 
           <!-- KM -->
@@ -126,12 +122,9 @@ const listItems = computed(() => {
             class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 cursor-pointer"
             :class="sortBy === 'KM' ? 'bg-white text-[var(--color-primblue)] shadow-sm' : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-sky-500">
-              <path fill-rule="evenodd" d="M1.5 13.5a8.25 8.25 0 0113.71-6.172 6.75 6.75 0 00-2.825 4.908c-.127.818-.223 1.63-.382 2.441a12.82 12.82 0 00-.236 1.83.75.75 0 01-1.49-.136 11.23 11.23 0 01.196-1.54l.002-.008c.137-.706.223-1.41.332-2.115a5.25 5.25 0 013.91-4.225A6.75 6.75 0 002.25 13.5H1.5z" clip-rule="evenodd" />
-              <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM6.16 3.56a.75.75 0 011.06 0l1.06 1.06a.75.75 0 11-1.06 1.06L6.16 4.62a.75.75 0 010-1.06zm10.62 0a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zM3 12a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm15 0a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 0118 12zM4.62 16.78a.75.75 0 011.06 0l1.06 1.06a.75.75 0 11-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm13.72 0a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zM12 18a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0112 18z" clip-rule="evenodd" />
-            </svg>
+            <i class="pi pi-directions text-sky-500"></i>
             Distance
-            <span v-if="sortBy === 'KM'" class="text-[10px]">{{ desc ? '▼' : '▲' }}</span>
+            <span v-if="sortBy === 'KM'" class="text-[10px]"><i :class="desc ? 'pi pi-sort-amount-down' : 'pi pi-sort-amount-up'"></i></span>
           </button>
 
           <!-- EFFECTIFS (Only for companies) -->
@@ -142,17 +135,15 @@ const listItems = computed(() => {
             class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition duration-200 cursor-pointer"
             :class="sortBy === 'EMPLOYEES' ? 'bg-white text-[var(--color-primblue)] shadow-sm' : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-violet-500">
-              <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 01-3.627 3.518c.27-.015.539-.033.807-.053a8.261 8.261 0 006.753-8.22v-.004l-.001-.122a.75.75 0 00-.363-.63 13.065 13.065 0 00-3.338-1.593z" />
-            </svg>
+            <i class="pi pi-users text-violet-500"></i>
             Effectifs
-            <span v-if="sortBy === 'EMPLOYEES'" class="text-[10px]">{{ desc ? '▼' : '▲' }}</span>
+            <span v-if="sortBy === 'EMPLOYEES'" class="text-[10px]"><i :class="desc ? 'pi pi-sort-amount-down' : 'pi pi-sort-amount-up'"></i></span>
           </button>
         </div>
       </div>
     </div>
     <!-- PODIUM FOR TOP 3 -->
-    <div class="flex justify-center items-end gap-3 md:gap-6 max-w-3xl mx-auto mb-12 px-2 pt-6">
+    <div class="flex w-full justify-center items-end gap-3 md:gap-6 max-w-3xl mx-auto mb-12 px-2 pt-6">
       
       <!-- 2nd Place -->
       <div v-if="podium.second" class="flex flex-col items-center order-1 w-28 md:w-36 flex-shrink-0">
@@ -356,7 +347,7 @@ const listItems = computed(() => {
               <!-- Total CO2 -->
               <td class="py-4 px-6 text-right">
                 <span class="inline-flex items-center gap-1 text-sm font-extrabold text-[var(--color-primgreen)] bg-[var(--color-primgreen)]/10 px-2.5 py-1 rounded-lg">
-                  🌿 {{ (item.totalCo2Saved || 0).toLocaleString('fr-FR', { maximumFractionDigits: 1 }) }} kg
+                  <i class="pi pi-sparkles" style="font-size: 0.85rem"></i> {{ (item.totalCo2Saved || 0).toLocaleString('fr-FR', { maximumFractionDigits: 1 }) }} kg
                 </span>
               </td>
             </tr>
@@ -382,7 +373,7 @@ const listItems = computed(() => {
       <div v-else class="text-center py-6">
         <p class="text-slate-400 font-medium text-sm flex items-center gap-1.5 justify-center">
           <span>Vous êtes à jour ! Fin du classement.</span>
-          <span>🌱</span>
+          <i class="pi pi-sparkles"></i>
         </p>
       </div>
     </div>

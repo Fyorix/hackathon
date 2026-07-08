@@ -33,7 +33,7 @@ onMounted(() => {
     <!-- Statistiques -->
     <div class="mx-auto grid  gap-6 md:grid-cols-3">
       <div class="rounded-2xl bg-white p-8 shadow">
-        <p class="text-gray-500">🌿 Solde de points carbone</p>
+        <p class="text-gray-500"><i class="pi pi-sparkles"></i> Solde de points carbone</p>
 
         <p class="mt-4 text-5xl font-bold text-[var(--color-primgreen)]">
           {{ carbonPoints }}
@@ -45,7 +45,7 @@ onMounted(() => {
       </div>
 
       <div class="rounded-2xl bg-white p-8 shadow">
-        <p class="text-gray-500">🚲 Kilomètres cumulés</p>
+        <p class="text-gray-500"><i class="pi pi-directions"></i> Kilomètres cumulés</p>
 
         <p class="mt-4 text-5xl font-bold text-[var(--color-primblue)]">
           {{ kilometers.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }}
@@ -57,7 +57,7 @@ onMounted(() => {
       </div>
 
       <div class="rounded-2xl bg-white p-8 shadow">
-        <p class="text-gray-500">🌍 CO₂ évité</p>
+        <p class="text-gray-500"><i class="pi pi-globe"></i> CO₂ évité</p>
 
         <p class="mt-4 text-5xl font-bold text-[var(--color-primgreen)]">
           {{ co2Saved.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) }}

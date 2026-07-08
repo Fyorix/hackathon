@@ -3,6 +3,13 @@ import router from '@/router';
 import logoUrl from '@/assets/greenTrip.PNG';
 import { clearToken } from '@/api';
 
+const navItems = [
+  { to: '/', label: 'Accueil', icon: 'pi pi-home' },
+  { to: '/declare', label: 'Déclarer un trajet', icon: 'pi pi-plus-circle' },
+  { to: '/leaderboard', label: 'Classement', icon: 'pi pi-trophy' },
+  { to: '/profile', label: 'Mon Profil', icon: 'pi pi-user' },
+];
+
 const logout = () => {
     clearToken();
     router.push('/login');
@@ -10,106 +17,121 @@ const logout = () => {
 </script>
 
 <template>
-  <nav class="topnav">
-    <div class="topnav-inner">
-      <!-- Logo -->
-      <router-link to="/" class="logo-link">
-        <img :src="logoUrl" alt="GreenTrip Logo" class="logo" />
-      </router-link>
-
-      <!-- Nav links -->
-      <div class="nav-links">
-        <router-link class="nav-link" to="/">Accueil</router-link>
-        <router-link class="nav-link" to="/declare">Déclarer un trajet</router-link>
-        <router-link class="nav-link" to="/leaderboard">Classement</router-link>
-        <router-link class="nav-link" to="/profile">Mon Profil</router-link>
-      </div>
-
-      <!-- Logout -->
-      <button @click="logout" class="logout-btn">
-        🚪 Déconnexion
-      </button>
+  <nav class="floating-nav">
+    <div class="bubble logo-bubble">
+      <span class="bubble-circle logo-circle">
+        <img :src="logoUrl" alt="GreenTrip Logo" class="logo-img" />
+      </span>
+      <span class="bubble-label">GreenTrip</span>
     </div>
+
+    <router-link
+      v-for="item in navItems"
+      :key="item.to"
+      :to="item.to"
+      class="bubble nav-bubble"
+      active-class="bubble-active"
+    >
+      <span class="bubble-circle">
+        <i :class="item.icon"></i>
+      </span>
+      <span class="bubble-label">{{ item.label }}</span>
+    </router-link>
+
+    <button class="bubble logout-bubble" @click="logout">
+      <span class="bubble-circle">
+        <i class="pi pi-sign-out"></i>
+      </span>
+      <span class="bubble-label">Déconnexion</span>
+    </button>
   </nav>
 </template>
 
 <style scoped>
-.topnav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--color-primblue);
-  width: 100%;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+.floating-nav {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
 }
 
-.topnav-inner {
+.bubble {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 24px;
-  height: 62px;
-}
-
-.logo-link {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  margin-right: 16px;
-}
-
-.logo {
-  height: 40px;
-  width: auto;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex: 1;
-}
-
-.nav-link {
-  color: rgba(255, 255, 255, 0.8) !important;
+  gap: 12px;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 0.92rem;
-  padding: 8px 16px;
-  border-radius: 10px;
-  transition: all 0.18s ease-in-out;
-  white-space: nowrap;
-}
-
-.nav-link:hover {
-  color: white !important;
-  background-color: rgba(255, 255, 255, 0.12);
-}
-
-.nav-link.router-link-active {
-  color: white !important;
-  background-color: var(--color-primgreen) !important;
-  font-weight: 600;
-  box-shadow: 0 3px 10px rgba(27, 122, 67, 0.35);
-}
-
-.logout-btn {
-  margin-left: auto;
-  flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.75);
+  border: none;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  font-weight: 500;
-  font-size: 0.88rem;
-  padding: 7px 16px;
-  border-radius: 10px;
+  padding: 0;
   cursor: pointer;
-  transition: all 0.18s ease-in-out;
 }
 
-.logout-btn:hover {
-  color: #ff6b6b;
-  border-color: rgba(255, 107, 107, 0.4);
-  background-color: rgba(255, 107, 107, 0.08);
+.bubble-label {
+  color: #fff;
+  background: rgba(27, 60, 43, 0.85);
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+}
+
+.bubble:hover .bubble-label {
+  max-width: 220px;
+  opacity: 1;
+}
+
+.bubble-circle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-primgreen, #1b7a43);
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bubble:hover .bubble-circle {
+  transform: scale(1.15);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.35);
+}
+
+.bubble-active .bubble-circle {
+  box-shadow: 0 0 0 3px #fff, 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+.logout-bubble .bubble-circle {
+  background: #b3312c;
+}
+
+.logo-bubble {
+  cursor: default;
+}
+
+.logo-bubble .bubble-circle {
+  width: 64px;
+  height: 64px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 </style>
